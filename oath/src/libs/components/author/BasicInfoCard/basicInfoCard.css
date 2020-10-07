@@ -1,12 +1,26 @@
 .container {
-    width: 100px;
+    width: 100%;
     background-color: skyblue;
-    height: 100px;
+    height: 250px;
+    margin: 10px;
 }
 
 .container .avatar {
-    width: 50%;
-    height: 50%;
-    border-radius: 25px;
+    width: 30%;
+    height: calc(var(width));
+    margin: 50px 0 30px 50px;
+    border-radius: calc(100% * 0.5);
     border: 2px solid #000000;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.container .person-info {
+    display: inline-block;
+    margin: 50px 10px 0 30px;
+    width: 45%;
+}
+
+.container .person-info .info-item {
+    display: block;
 }

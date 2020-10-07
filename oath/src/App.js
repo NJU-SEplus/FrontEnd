@@ -6,6 +6,8 @@ function App() {
   return (
     <div className="App">
       <BasicInfoCard></BasicInfoCard>
+      <BasicInfoCard></BasicInfoCard>
+      <BasicInfoCard></BasicInfoCard>
     </div>
   );
 }
