@@ -1,11 +1,13 @@
-.container {
+.basic-info-card {
     width: 100%;
     background-color: skyblue;
     height: 250px;
     margin: 10px;
+    /* display: flex;
+    flex: 1 */
 }
 
-.container .avatar {
+.basic-info-card .avatar {
     width: 30%;
     height: calc(var(width));
     margin: 50px 0 30px 50px;
@@ -15,12 +17,12 @@
     vertical-align: top;
 }
 
-.container .person-info {
+.basic-info-card .person-info {
     display: inline-block;
     margin: 50px 10px 0 30px;
-    width: 45%;
+    /* width: 45%; */
 }
 
-.container .person-info .info-item {
+.basic-info-card .person-info .info-item {
     display: block;
 }

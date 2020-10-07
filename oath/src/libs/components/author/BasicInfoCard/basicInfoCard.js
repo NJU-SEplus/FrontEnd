@@ -17,7 +17,7 @@ class BasicInfoCard extends React.Component {
   render() {
     const aka = this.state.alias.join("/");
     return (
-      <div className="container">
+      <div className="basic-info-card">
         <img className="avatar" src={this.state.avatar} alt="oops"></img>
         <div className="person-info">
           <span className="info-item">Name: {this.state.name}</span>
