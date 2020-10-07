@@ -3,11 +3,13 @@
     background-color: skyblue;
     height: 250px;
     margin: 10px;
-    /* display: flex;
-    flex: 1 */
 }
 
-.basic-info-card .avatar {
+.basic-info-card .card {
+    height: 100%;
+}
+
+/* .basic-info-card .avatar {
     width: 30%;
     height: calc(var(width));
     margin: 50px 0 30px 50px;
@@ -20,9 +22,41 @@
 .basic-info-card .person-info {
     display: inline-block;
     margin: 50px 10px 0 30px;
-    /* width: 45%; */
 }
 
 .basic-info-card .person-info .info-item {
     display: block;
+}
+
+.basic-info-card .person-info .info-item:first-child {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+} */
+
+.basic-info-card .card .person-info-name {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px 0 4px 30px;
+}
+
+.basic-info-card .card .person-info-aka {
+    font-size: 15px;
+    margin: 0px 30px;
+    color: gray;
+}
+
+.basic-info-card .card .academic-info {
+    margin: 10px 0 4px 146px;
+}
+
+.basic-info-card .card .academic-info .academic-info-item {
+    margin-bottom: 10px;
+}
+
+.basic-info-card .card .academic-info .academic-info-item > * {
+    font-size: 20px;
+    font-weight: bold;
+    font-style: italic;
+    color: gray;
 }

@@ -1,4 +1,5 @@
 import React from "react"
+import { Card } from 'antd';
 import "./AffiliationCard.css"
 
 class AffiliationCard extends React.Component {
@@ -38,14 +39,22 @@ class AffiliationCard extends React.Component {
 
 		return (
 			<div className="affiliation-card">
-				<div className="title">
+				{/* <div className="title">
 					<span>Affiliations</span>
 				</div>
 				<div className="current">
 					<span className="current-item">{this.state.affiliation[0].time}: </span>
 					<span className="current-item">{this.state.affiliation[0].name}</span>
 				</div>
-				<div className="history">{history}</div>
+				<div className="history">{history}</div> */}
+
+				<Card className="card" title={<div className="title">Affiliation</div>}>
+					<div className="current">
+						<span className="current-item">{this.state.affiliation[0].time}: </span>
+						<span className="current-item">{this.state.affiliation[0].name}</span>
+					</div>
+					<div className="history">{history}</div>
+    		</Card>
 			</div>
 		)
 	}

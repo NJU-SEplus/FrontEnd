@@ -5,14 +5,22 @@
     margin: 10px;
 }
 
+.affiliation-card .card {
+    height: 100%;
+}
+
+.affiliation-card .card >* {
+    text-align: center;
+}
+
 .affiliation-card .title {
-    margin: 10px 0 10px 10px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
+    text-align: center;
 }
 
 .affiliation-card .current {
-    margin: 10px 0 10px 20px;
+    margin: 0 0 10px 20px;
     font-size: 20px;
     font-weight: bold;
 }
@@ -20,7 +28,7 @@
 .affiliation-card .history {
     color: gray;
     font-size: 15px;
-    margin: 5px 0 5px 25px;
+    margin: 5px 0 5px 20px;
 }
 
 .affiliation-card .history > * > * {
