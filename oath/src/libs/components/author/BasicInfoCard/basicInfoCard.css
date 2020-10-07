@@ -1,0 +1,12 @@
+.container {
+    width: 100px;
+    background-color: skyblue;
+    height: 100px;
+}
+
+.container .avatar {
+    width: 50%;
+    height: 50%;
+    border-radius: 25px;
+    border: 2px solid #000000;
+}
