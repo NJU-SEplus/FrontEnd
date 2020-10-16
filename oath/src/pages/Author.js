@@ -10,15 +10,14 @@ import TopicCard from '../libs/components/author/TopicCard/TopicCard'
 class Author extends React.Component {
   constructor(props){
     super(props);
-    this.state={
-      id: '37275735100'
+    this.state = {
+      id: props.match.params.id
     }
   }
 
   componentWillMount (){
-    console.log("aaa",this)
     let r = this.loadBasic()
-    // console.log("in", r)
+    console.log("in", r)
   }
 
   async loadBasic() {
