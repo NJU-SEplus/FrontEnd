@@ -6,19 +6,15 @@ import 'antd/dist/antd.min.css';
 import { Route, BrowserRouter as Router} from 'react-router-dom';
 
 
-import App from './App';
-import Test1 from './pages/Test1';
-import Test2 from './pages/Test2';
+import Author from './pages/Author';
 import Home from './pages/Home';
 import SearchResult from './pages/SearchResult';
 
 
 ReactDOM.render(
 (  <Router>
-    <Route path="/" component={App} exact/>
-    <Route path="/t1" component={Test1}/>
-    <Route path="/t2" component={Test2}/>
-    <Route path="/home" component={Home}/>
+    <Route path="/" component={Home} exact/>
+    <Route path="/authorprofile/:id" component={Author}/>
     <Route path="/result" component={SearchResult}/>
   </Router>),
   document.getElementById('root')

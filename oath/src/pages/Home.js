@@ -29,7 +29,8 @@ class Home extends React.Component {
 	}
 	
 	search(val) {
-		this.props.history.push({ pathname : '/result' ,query : {author: val} })
+    console.log( this.props)
+    this.props.history.push({ pathname : '/result' ,query : {author: val}, search:'?name='+val })
 	}
 }
 
