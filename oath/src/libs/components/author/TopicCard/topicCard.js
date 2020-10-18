@@ -8,24 +8,8 @@ class TopicCard extends React.Component {
   }
 
   render() {
-    const data = [
-      {
-        name: "System",
-        value: 131,
-      },
-      {
-        name: "Network",
-        value: 120,
-      },
-      {
-        name: "Testing",
-        value: 50,
-      },
-      {
-        name: "Software",
-        value: 100,
-      },
-    ];
+    const data = this.props.topicList;
+
     const config = {
       // data,
       color: "#6262ff",
@@ -38,14 +22,14 @@ class TopicCard extends React.Component {
       weightField: "value",
       wordStyle: {
         fontFamily: "Verdana",
-        fontSize: [24, 40],
+        fontSize: [24, 80],
       },
       padding: [10, 20]
     }
 
     return (
       <div className="topic-card">
-        <WordCloud {...config} />
+        <WordCloud {...config} autoFit={false}/>
       </div>
     );
   }

@@ -66,6 +66,8 @@ class Author extends React.Component {
         topicList: topicList,
       },
     });
+
+    // console.log("topic",this.state.topic);
   }
 
   async loadPapers() {
@@ -78,6 +80,8 @@ class Author extends React.Component {
   }
 
   render() {
+    console.log("author profile render");
+    console.log("topic data in author profile",this.state.topic)
     return (
       <div className="Author">
         <Row  gutter={16} >
