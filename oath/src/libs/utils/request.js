@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 let fetch = axios.create({
-    baseURL: "http://localhost:3000", 
+    baseURL: "http://120.55.43.25:8088/", 
     timeout: 50000 // request timeout
 })
 fetch.interceptors.request.use(config => {
