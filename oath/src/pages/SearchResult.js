@@ -15,12 +15,13 @@ class SearchResult extends React.Component {
 
 		this.state = {
 			authorList: [],
-			loading: false  // this variable should be in props
+			loading: false,  // this variable should be in props
+			searchName: this.props.location.search.split("=")[1]
 		}
 
 		let _this = this;
 
-		request('/search/name?name='+this.props.location.query.author)
+		request('/search/name?name=' + this.state.searchName)
 			.then(res => {
 				_this.setState({
 					authorList: res.data.content
@@ -40,7 +41,7 @@ class SearchResult extends React.Component {
 					<div className="logo">OATH</div>
 					<div className="search-bar">
 						<Search
-							value={this.props.location.query.author}
+							value={this.state.searchName}
 							onSearch={value => console.log(value)}>
 						</Search>
 					</div>

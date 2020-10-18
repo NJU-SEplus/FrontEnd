@@ -4,43 +4,28 @@ import "./TopicCard.css";
 
 class TopicCard extends React.Component {
   constructor(props) {
-	super(props);
+    super(props);
   }
 
   render() {
-    const data = [
-      {
-        name: "System",
-        value: 131,
-      },
-      {
-        name: "Network",
-        value: 120,
-      },
-      {
-        name: "Testing",
-        value: 50,
-      },
-      {
-        name: "Software",
-        value: 100,
-      },
-    ];
+    const data = this.props.topicList;
+
     const config = {
-	  data,
+      data,
+      width: 400,
+      height: 250,
       color: "#6262ff",
-	//   data: this.props.topicList,
-	  loading: this.props.loading,
+      loading: this.props.loading,
       wordField: "name",
       weightField: "value",
       wordStyle: {
         fontFamily: "Verdana",
-        fontSize: [24, 40],
+        fontSize: [24, 80],
       },
     };
     return (
       <div className="topic-card">
-        <WordCloud {...config} />
+        <WordCloud {...config} autoFit={false}/>
       </div>
     );
   }
