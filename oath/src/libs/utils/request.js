@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 let fetch = axios.create({
     baseURL: "http://localhost:3000", 
-    timeout: 5000 // request timeout
+    timeout: 50000 // request timeout
 })
 fetch.interceptors.request.use(config => {
     if (config.method === 'post' || config.method === 'put' || config.method === 'delete') {

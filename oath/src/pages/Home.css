@@ -1,0 +1,28 @@
+.outer {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.outer .container .home-title {
+    font-size: 60px;
+    font-family: 'Calibri';
+    font-weight: bold;
+    margin-bottom: 0.3em;
+}
+
+.outer .container .slogan {
+    font-size: 15px;
+    margin-bottom: 2em;
+    font-family: 'Lucida Console';
+}
+
+.outer .container .search .search-bar {
+    width: 500px;
+    height: 50px;
+}
