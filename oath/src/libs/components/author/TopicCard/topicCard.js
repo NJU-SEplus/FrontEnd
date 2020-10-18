@@ -4,7 +4,7 @@ import "./TopicCard.css";
 
 class TopicCard extends React.Component {
   constructor(props) {
-	super(props);
+    super(props);
   }
 
   render() {
@@ -27,17 +27,22 @@ class TopicCard extends React.Component {
       },
     ];
     const config = {
-	  data,
+      // data,
       color: "#6262ff",
-	//   data: this.props.topicList,
-	  loading: this.props.loading,
+      autoFit: false,
+      // width: 400,
+      // height: 230,
+      data: this.props.topicList,
+      loading: this.props.loading,
       wordField: "name",
       weightField: "value",
       wordStyle: {
         fontFamily: "Verdana",
         fontSize: [24, 40],
       },
-    };
+      padding: [10, 20]
+    }
+
     return (
       <div className="topic-card">
         <WordCloud {...config} />

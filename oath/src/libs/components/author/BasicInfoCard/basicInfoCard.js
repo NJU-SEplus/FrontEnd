@@ -1,7 +1,6 @@
 import React from "react";
 import { Skeleton, Card, Avatar, Row, Col } from "antd";
 import "./BasicInfoCard.css";
-import "../AffiliationCard/AffiliationCard.css";
 import { BarsOutlined, ShareAltOutlined } from "@ant-design/icons";
 
 const { Meta } = Card;
@@ -34,7 +33,7 @@ class BasicInfoCard extends React.Component {
         <Card className="card">
           <Skeleton loading={this.props.loading} avatar active>
             <Row>
-              <Col span={12} offset={2}>
+              <Col span={12} offset={1}>
                 <Meta
                   avatar={
                     <Avatar
@@ -42,7 +41,6 @@ class BasicInfoCard extends React.Component {
                       size={100}
                     />
                   }
-                  // title={<div className="person-info-name">{this.state.basicInfo.name}</div>}
                   title={
                     <div className="person-info-name">{this.props.name}</div>
                   }
@@ -67,7 +65,7 @@ class BasicInfoCard extends React.Component {
                   </div>
                 </div>
               </Col>
-              <Col className="affiliation-card" span={10}>
+              <Col className="affiliation-card" span={10} offset={1}>
                 <div className="title">Affiliation</div>
                 <div className="current">
                   <div className="current-title">Current: </div>
