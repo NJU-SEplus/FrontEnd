@@ -1,7 +1,12 @@
 import React from "react";
-import { Skeleton, Card, Avatar, Row, Col } from "antd";
+import { Skeleton, Card, Avatar, Row, Col, Tooltip } from "antd";
 import "./BasicInfoCard.css";
-import { BarsOutlined, ShareAltOutlined } from "@ant-design/icons";
+import {
+  BarsOutlined,
+  ShareAltOutlined,
+  LineChartOutlined,
+  QuestionCircleFilled,
+} from "@ant-design/icons";
 
 const { Meta } = Card;
 
@@ -11,11 +16,13 @@ class BasicInfoCard extends React.Component {
     this.state = {
       avatar:
         "https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png",
+      heat: "heat = ∑(1 + (year - 2010) * 0.1) * (citations + 10)",
     };
   }
 
   render() {
     const aka = (this.props.aka || []).join(" / ");
+    // const aka = "6f, f6"
     const history = this.props.history.map((aff) => {
       return (
         // <div key={aff.name}>
@@ -53,19 +60,29 @@ class BasicInfoCard extends React.Component {
                 <div className="academic-info">
                   <div className="academic-info-item">
                     <span className="item-title">
-                      <BarsOutlined /> Paper Count:{" "}
+                      <BarsOutlined /> Paper Count :{" "}
                     </span>
                     <span className="item-detail">{this.props.paperCount}</span>
                   </div>
                   <div className="academic-info-item">
                     <span className="item-title">
-                      <ShareAltOutlined /> Citations:{" "}
+                      <ShareAltOutlined /> Citations :{" "}
+                    </span>
+                    <span className="item-detail">{this.props.citation}</span>
+                  </div>
+                  <div className="academic-info-item">
+                    <span className="item-title">
+                      <LineChartOutlined /> Heat{" "}
+                      <Tooltip className="item-explain" placement="bottom" title={this.state.heat}>
+                        <QuestionCircleFilled />
+                      </Tooltip>{" "}
+                      :{" "}
                     </span>
                     <span className="item-detail">{this.props.citation}</span>
                   </div>
                 </div>
               </Col>
-              <Col className="affiliation-card" span={10} offset={1}>
+              <Col className="affiliation-card" span={10}>
                 <div className="title">Affiliation</div>
                 <div className="current">
                   <div className="current-title">Current: </div>
