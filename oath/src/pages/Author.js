@@ -5,8 +5,8 @@ import { Row, Col } from "antd";
 import request from "../libs/utils/request";
 
 import BasicInfoCard from "../libs/components/author/BasicInfoCard/BasicInfoCard";
-import AffiliationCard from "../libs/components/author/AffiliationCard/AffiliationCard";
 import TopicCard from "../libs/components/author/TopicCard/TopicCard";
+import PaperList from "../libs/components/author/PaperList/PaperList";
 
 class Author extends React.Component {
   constructor(props) {
@@ -24,12 +24,14 @@ class Author extends React.Component {
         loading: true,
         topicList: [],
       },
+      paperList: [],
     };
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     this.loadBasic();
     this.loadTopics();
+    this.loadPapers();
   }
 
   async loadBasic() {
@@ -61,11 +63,20 @@ class Author extends React.Component {
       ...this.state,
       topic: {
         loading: false,
-        topicList: topicList
+        topicList: topicList,
       },
     });
 
     // console.log("topic",this.state.topic);
+  }
+
+  async loadPapers() {
+    const res = await request("/author/papers?id=" + this.state.id);
+    console.log(res.data.content);
+    this.setState({
+      ...this.state,
+      paperList: res.data.content,
+    });
   }
 
   render() {
@@ -73,12 +84,11 @@ class Author extends React.Component {
     console.log("topic data in author profile",this.state.topic)
     return (
       <div className="Author">
-        <Row gutter={16}>
+        <Row  gutter={16} >
           <Col span={16}>
             <BasicInfoCard
               name={this.state.basicInfo.author_name}
-              aka={['aaa', 'bbb']}
-              // aka={this.state.basicInfo.author_alias}
+              aka={this.state.basicInfo.author_alias}
               avatar={this.state.basicInfo.author_avatar}
               paperCount={this.state.basicInfo.author_paperCount}
               citation={this.state.basicInfo.citation}
@@ -92,6 +102,12 @@ class Author extends React.Component {
               topicList={this.state.topic.topicList}
               loading={this.state.topic.loading}
             />
+          </Col>
+        </Row>
+
+        <Row gutter={16} >
+          <Col span={24}>
+            <PaperList paperList={this.state.paperList} />
           </Col>
         </Row>
       </div>

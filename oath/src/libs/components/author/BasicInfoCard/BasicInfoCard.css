@@ -2,7 +2,6 @@
     width: 100%;
     background-color: skyblue;
     height: 250px;
-    margin: 10px;
 }
 
 .basic-info-card .card {
@@ -39,27 +38,58 @@
     font-weight: bold;
     /* border: 2px #000 solid; */
     line-height: 1.2;
-
     margin: 10px 0 4px 10px;
 }
 
 .basic-info-card .card .person-info-aka {
     font-size: 15px;
-    line-height: normal;
+    /* line-height: normal; */
+    line-height: 1.2;
     margin: 0px 10px;
     color: gray;
 }
 
 .basic-info-card .card .academic-info {
-    margin: 20px 0 4px 126px;
+    margin: 3px 0 4px 126px;
 }
 
 .basic-info-card .card .academic-info .academic-info-item {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .basic-info-card .card .academic-info .academic-info-item > * {
+    font-size: 15px;
+    /* font-weight: bold; */
+    font-style: italic;
+}
+
+.academic-info .academic-info-item .item-explain {
+    font-size: 13px;
+    padding-left: 2px;
+    /* font-weight: bold; */
+}
+
+.affiliation-card {
+    padding: 10px 0;
+}
+
+
+.affiliation-card .title {
     font-size: 20px;
     font-weight: bold;
-    font-style: italic;
+    margin-bottom: 5px;
+    /* text-align: center; */
+}
+
+.affiliation-card .current .current-title,  .affiliation-card .history .history-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.affiliation-card .current .current-item, .affiliation-card .history .history-item {
+    font-size: 15px;
+}
+
+.affiliation-card .history  > * {
+    margin-right: 5px;
 }

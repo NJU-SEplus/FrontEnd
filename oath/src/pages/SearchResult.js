@@ -71,7 +71,6 @@ class SearchResult extends React.Component {
 			return (
 				<Link to={{
 					pathname: '/authorprofile/' + curr.author_id,
-					state: { id: curr.author_id }
 				}}
 					key={curr.author_id}>
 					<Card className="card" >

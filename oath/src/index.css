@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-image: url("./images/background/Colors\ Of\ Sky.jpg");
+  box-sizing: border-box;
 }
 
 code {

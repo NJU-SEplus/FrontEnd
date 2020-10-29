@@ -11,10 +11,12 @@ class TopicCard extends React.Component {
     const data = this.props.topicList;
 
     const config = {
-      data,
-      width: 400,
-      height: 250,
+      // data,
       color: "#6262ff",
+      autoFit: false,
+      // width: 400,
+      // height: 230,
+      data: this.props.topicList,
       loading: this.props.loading,
       wordField: "name",
       weightField: "value",
@@ -22,7 +24,9 @@ class TopicCard extends React.Component {
         fontFamily: "Verdana",
         fontSize: [24, 80],
       },
-    };
+      padding: [10, 20]
+    }
+
     return (
       <div className="topic-card">
         <WordCloud {...config} autoFit={false}/>
