@@ -19,22 +19,18 @@ class SearchResult extends React.Component {
 			searchName: this.props.location.search.split("=")[1]
 		}
 
-		let _this = this;
+		this.getResult = this.getResult.bind(this);
+		this.changeVal = this.changeVal.bind(this);
+		this.generateResult = this.generateResult.bind(this);
+		this.search = this.search.bind(this);
 
-		request('/search/name?name=' + this.state.searchName)
-			.then(res => {
-				_this.setState({
-					authorList: res.data.content
-				})
-			})
-			.catch(err => {
-				console.log(err);
-			})
+		this.getResult();
 	}
 
 	// search value from routes
 	render() {
-		const cardList = this.generateResult.call(this);
+		console.log("render");
+		const cardList = this.generateResult();
 		return (
 			<div className="search-result-container">
 				<div className="search">
@@ -42,7 +38,8 @@ class SearchResult extends React.Component {
 					<div className="search-bar">
 						<Search
 							value={this.state.searchName}
-							onSearch={value => console.log(value)}>
+							onChange={this.changeVal}
+							onSearch={this.search}>
 						</Search>
 					</div>
 				</div>
@@ -53,13 +50,23 @@ class SearchResult extends React.Component {
 		);
 	}
 
+	getResult() {
+		let _this = this;
+
+		request('/search/name?name=' + this.state.searchName)
+			.then(res => {
+				console.log(res);
+				_this.setState({
+					authorList: res.data.content
+				})
+			})
+			.catch(err => {
+				console.log(err);
+			})
+	}
+
 	generateResult() {
 		let cardList = this.state.authorList.map(curr => {
-			// let fields = curr.fields.map((curr) => {
-			// 	return (
-			// 		<div className="field-info-item">{curr}</div>
-			// 	);
-			// });
 
 			return (
 				<Link to={{
@@ -100,6 +107,16 @@ class SearchResult extends React.Component {
 		});
 
 		return cardList;
+	}
+
+	changeVal(e) {
+		this.setState({
+			searchName : e.target.value
+		});
+	}
+
+	search(val) {
+    this.getResult(val);
 	}
 }
 
