@@ -1,4 +1,10 @@
-.outer {
+.container {
+    position: relative;
+    height: 100vh;
+    min-height: 410px;
+}
+
+.container .overlay {
     position: absolute;
     top: 0;
     width: 100%;
@@ -9,20 +15,42 @@
     text-align: center;
 }
 
-.outer .container .home-title {
+.container .overlay .home-title {
     font-size: 60px;
     font-family: 'Calibri';
     font-weight: bold;
     margin-bottom: 0.3em;
 }
 
-.outer .container .slogan {
+.container .overlay .slogan {
     font-size: 15px;
     margin-bottom: 2em;
     font-family: 'Lucida Console';
 }
 
-.outer .container .search .search-bar {
+.container .overlay .search .search-bar {
     width: 500px;
     height: 50px;
+}
+
+.arrow-tip {
+    font-weight: bold;
+    text-align: center;
+}
+
+.ranking .heat-ranking {
+    margin-top: 50px;
+}
+
+.ranking .list {
+    /* background-color: aqua; */
+    box-shadow: 2px 5px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.ranking .description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
 }
