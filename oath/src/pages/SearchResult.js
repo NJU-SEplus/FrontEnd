@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
-import { Skeleton, Card, Avatar } from 'antd';
+import { Skeleton, Card, Avatar, Spin } from 'antd';
 import { Link } from 'react-router-dom'
 import request from '../libs/utils/request'
 
@@ -15,7 +15,7 @@ class SearchResult extends React.Component {
 
 		this.state = {
 			authorList: [],
-			loading: false,  // this variable should be in props
+			loading: true,  // this variable should be in props
 			searchName: this.props.location.search.split("=")[1]
 		}
 
@@ -43,9 +43,11 @@ class SearchResult extends React.Component {
 						</Search>
 					</div>
 				</div>
-				<div className="result">
-					{cardList}
-				</div>
+				<Spin spinning={this.state.loading}>
+					<div className="result">
+						{cardList}
+					</div>
+				</Spin>
 			</div>
 		);
 	}
@@ -57,7 +59,8 @@ class SearchResult extends React.Component {
 			.then(res => {
 				console.log(res);
 				_this.setState({
-					authorList: res.data.content
+					authorList: res.data.content,
+					loading: false
 				})
 			})
 			.catch(err => {
@@ -74,32 +77,32 @@ class SearchResult extends React.Component {
 				}}
 					key={curr.author_id}>
 					<Card className="card" >
-						<Skeleton loading={this.state.loading} avatar active>
-							<Meta
-								avatar={
-									<Avatar src={curr.author_avatar} size={100} />
-								}
-							// title={<div className="person-name">{this.state.basicInfo.name}</div>}
-							// description={<div className="person-aka">AKA: {aka}</div>}
-							/>
-							<div className="person-info">
-								<div className="person-info-name">{curr.author_name}</div>
-								{/* <div className="person-info-aka">AKA: {aka}</div> */}
+						{/* <Skeleton loading={this.state.loading} avatar active> */}
+						<Meta
+							avatar={
+								<Avatar src={curr.author_avatar} size={100} />
+							}
+						// title={<div className="person-name">{this.state.basicInfo.name}</div>}
+						// description={<div className="person-aka">AKA: {aka}</div>}
+						/>
+						<div className="person-info">
+							<div className="person-info-name">{curr.author_name}</div>
+							{/* <div className="person-info-aka">AKA: {aka}</div> */}
+						</div>
+						<div className="academic-info">
+							<div className="academic-info-item">
+								<span className="item-title">Affiliation: </span>
+								<span className="item-detail">{curr.affiliation}</span>
 							</div>
-							<div className="academic-info">
-								<div className="academic-info-item">
-									<span className="item-title">Affiliation: </span>
-									<span className="item-detail">{curr.affiliation}</span>
-								</div>
-								<div className="academic-info-item">
-									<span className="item-title">Paper Count: </span>
-									<span className="item-detail">{curr.author_paperCount}</span>
-								</div>
+							<div className="academic-info-item">
+								<span className="item-title">Paper Count: </span>
+								<span className="item-detail">{curr.author_paperCount}</span>
 							</div>
-							{/* <div className="field-info">
+						</div>
+						{/* <div className="field-info">
 								{fields}
 							</div> */}
-						</Skeleton>
+						{/* </Skeleton> */}
 					</Card>
 				</Link>
 			)
@@ -110,12 +113,15 @@ class SearchResult extends React.Component {
 
 	changeVal(e) {
 		this.setState({
-			searchName : e.target.value
+			searchName: e.target.value
 		});
 	}
 
 	search(val) {
-    this.getResult(val);
+		this.setState({
+			loading: true
+		});
+		this.getResult(val);
 	}
 }
 
