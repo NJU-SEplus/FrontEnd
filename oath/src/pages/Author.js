@@ -7,6 +7,7 @@ import request from "../libs/utils/request";
 import BasicInfoCard from "../libs/components/author/BasicInfoCard/BasicInfoCard";
 import TopicCard from "../libs/components/author/TopicCard/TopicCard";
 import PaperList from "../libs/components/author/PaperList/PaperList";
+import InterestLine from "../libs/components/author/InterestsLine/InterestsLine"
 
 class Author extends React.Component {
   constructor(props) {
@@ -28,10 +29,11 @@ class Author extends React.Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadBasic();
     this.loadTopics();
     this.loadPapers();
+    this.loadInterests();
   }
 
   async loadBasic() {
@@ -66,13 +68,15 @@ class Author extends React.Component {
         topicList: topicList,
       },
     });
+  }
 
-    // console.log("topic",this.state.topic);
+  async loadInterests(){
+    const res = await request("/author/showResearchDirection?id=" + this.state.id);
+    console.log("interest", res);
   }
 
   async loadPapers() {
     const res = await request("/author/papers?id=" + this.state.id);
-    console.log(res.data.content);
     this.setState({
       ...this.state,
       paperList: res.data.content,
@@ -80,8 +84,6 @@ class Author extends React.Component {
   }
 
   render() {
-    console.log("author profile render");
-    console.log("topic data in author profile",this.state.topic)
     return (
       <div className="Author">
         <Row  gutter={16} >
@@ -103,6 +105,12 @@ class Author extends React.Component {
               loading={this.state.topic.loading}
             />
           </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={24} >
+            <InterestLine />
+          </Col>
+
         </Row>
 
         <Row gutter={16} >

@@ -1,6 +1,5 @@
 import React from "react";
 import { Skeleton, Card, Avatar, Row, Col, Tooltip } from "antd";
-import "./BasicInfoCard.css";
 import {
   BarsOutlined,
   ShareAltOutlined,
@@ -8,7 +7,7 @@ import {
   QuestionCircleFilled,
 } from "@ant-design/icons";
 
-const { Meta } = Card;
+import "./BasicInfoCard.css";
 
 class BasicInfoCard extends React.Component {
   constructor(props) {
@@ -22,13 +21,9 @@ class BasicInfoCard extends React.Component {
 
   render() {
     const aka = (this.props.aka || []).join(" / ");
-    // const aka = "6f, f6"
+    // const aka = "6f, f6";
     const history = this.props.history.map((aff) => {
       return (
-        // <div key={aff.name}>
-        // 	<span className="history-item" >{aff.time}: </span>
-        // 	<span className="history-item" >{aff.name}</span>
-        // </div>
         <div key={aff}>
           <span className="history-item">{aff}</span>
         </div>
@@ -39,62 +34,70 @@ class BasicInfoCard extends React.Component {
       <div className="basic-info-card">
         <Card className="card">
           <Skeleton loading={this.props.loading} avatar active>
-            <Row>
-              <Col span={12} offset={1}>
-                <Meta
-                  avatar={
-                    <Avatar
-                      src={this.props.avatar || this.state.avatar}
-                      size={100}
-                    />
-                  }
-                  title={
-                    <div className="person-info-name">{this.props.name}</div>
-                  }
-                  description={
-                    aka !== "" && (
-                      <div className="person-info-aka">also called: {aka}</div>
-                    )
-                  }
+            <div className="card-content">
+              <div className="basic-info-avatar">
+                <Avatar
+                  src={this.props.avatar || this.state.avatar}
+                  size={100}
                 />
-                <div className="academic-info">
-                  <div className="academic-info-item">
-                    <span className="item-title">
-                      <BarsOutlined /> Paper Count :{" "}
-                    </span>
-                    <span className="item-detail">{this.props.paperCount}</span>
-                  </div>
-                  <div className="academic-info-item">
-                    <span className="item-title">
-                      <ShareAltOutlined /> Citations :{" "}
-                    </span>
-                    <span className="item-detail">{this.props.citation}</span>
-                  </div>
-                  <div className="academic-info-item">
-                    <span className="item-title">
-                      <LineChartOutlined /> Heat{" "}
-                      <Tooltip className="item-explain" placement="bottom" title={this.state.heat}>
-                        <QuestionCircleFilled />
-                      </Tooltip>{" "}
-                      :{" "}
-                    </span>
-                    <span className="item-detail">{this.props.citation}</span>
-                  </div>
-                </div>
-              </Col>
-              <Col className="affiliation-card" span={10}>
-                <div className="title">Affiliation</div>
-                <div className="current">
-                  <div className="current-title">Current: </div>
-                  <span className="current-item">{this.props.current}</span>
-                </div>
-                <div className="history">
-                  <div className="history-title">History: </div>
-                  {history.length === 0 && "No other affiliations"}
-                  {history.length !== 0 && history}
-                </div>
-              </Col>
-            </Row>
+              </div>
+              <div className="basic-info-words">
+                <Row className="person-info-detail">
+                  <Col span={12}>
+                    <div className="person-info-name">{this.props.name}</div>
+                    {aka !== "" && (
+                      <div className="person-info-aka">also called: {aka}</div>
+                    )}
+                    <div className="academic-info">
+                      <div className="academic-info-item">
+                        <span className="item-title">
+                          <BarsOutlined /> Paper Count :{" "}
+                        </span>
+                        <span className="item-detail">
+                          {this.props.paperCount}
+                        </span>
+                      </div>
+                      <div className="academic-info-item">
+                        <span className="item-title">
+                          <ShareAltOutlined /> Citations :{" "}
+                        </span>
+                        <span className="item-detail">
+                          {this.props.citation}
+                        </span>
+                      </div>
+                      <div className="academic-info-item">
+                        <span className="item-title">
+                          <LineChartOutlined /> Heat{" "}
+                          <Tooltip
+                            className="item-explain"
+                            placement="bottom"
+                            title={this.state.heat}
+                          >
+                            <QuestionCircleFilled />
+                          </Tooltip>{" "}
+                          :{" "}
+                        </span>
+                        <span className="item-detail">
+                          {this.props.citation}
+                        </span>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col className="affiliation-info" span={12}>
+                    <div className="title">Affiliation</div>
+                    <div className="current">
+                      <div className="title">Current: </div>
+                      <span className="current-item">{this.props.current}</span>
+                    </div>
+                    <div className="history">
+                      <div className="title">History: </div>
+                      {history.length === 0 && "No other affiliations"}
+                      {history.length !== 0 && history}
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+            </div>
           </Skeleton>
         </Card>
       </div>
