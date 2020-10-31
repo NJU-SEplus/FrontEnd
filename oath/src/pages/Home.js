@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, List, Avatar, Row, Col } from 'antd';
-import request from '../libs/utils/request'
+import { Link } from 'react-router-dom';
+import request from '../libs/utils/request';
 
 import './Home.css';
 
@@ -11,58 +12,7 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      authorsSortedByPaperCount: [
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-        {
-          name: "wen gao",
-          id: 1234567,
-          publishCount: 12
-        },
-      ],
+      authorsSortedByPaperCount: [],
       authorsSortedByHeat: [],
       defaultAvatar: "https://img.51miz.com/Element/00/88/08/84/72f298b9_E880884_d0f63115.png",
       loadingAuthorsByCount: true,
@@ -72,7 +22,6 @@ class Home extends React.Component {
 
     this.loadRanking = this.loadRanking.bind(this);
     this.getRanking = this.getRanking.bind(this);
-    this.jumpToAuthorProfile = this.jumpToAuthorProfile.bind(this);
 
     this.loadRanking();
   }
@@ -95,7 +44,7 @@ class Home extends React.Component {
             </div>
           </div>
           <div className="arrow-tip">
-          ∨
+            ∨
         </div>
         </div>
 
@@ -107,13 +56,18 @@ class Home extends React.Component {
                 itemLayout="horizontal"
                 dataSource={this.state.authorsSortedByPaperCount}
                 renderItem={item => (
-                  <List.Item>
-                    <List.Item.Meta
-                      avatar={<Avatar src={this.state.defaultAvatar}></Avatar>}
-                      title={<span onClick={this.jumpToAuthorProfile(item.id)}>{item.name}</span>}
-                      description={<span>Paper Counts: {item.publishCount}</span>}
-                    />
-                  </List.Item>
+                  <Link to={{
+                    pathname: '/authorprofile/' + item.author_id,
+                  }}
+                    key={item.author_id}>
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={<Avatar src={this.state.defaultAvatar}></Avatar>}
+                        title={<span>{item.author_name}</span>}
+                        description={<span>Paper Counts: {item.author_paperCount}</span>}
+                      />
+                    </List.Item>
+                  </Link>
                 )}>
               </List>
             </Col>
@@ -123,7 +77,7 @@ class Home extends React.Component {
               Top 10 Authors <br /> Sorted By Paper Counts
             </Col>
           </Row>
-          <Row className="heat-ranking">
+          <Row className="heat-ranking" gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
             <Col className="description"
               span={6}
               offset={3}>
@@ -135,13 +89,18 @@ class Home extends React.Component {
                 itemLayout="horizontal"
                 dataSource={this.state.authorsSortedByHeat}
                 renderItem={item => (
+                  <Link to={{
+                    pathname: '/authorprofile/' + item.author_id,
+                  }}
+                    key={item.author_id}>
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar src={this.state.avatar}></Avatar>}
-                      title={<span onClick={this.jumpToAuthorProfile(item.id)}>{item.name}</span>}
+                      avatar={<Avatar src={this.state.defaultAvatar}></Avatar>}
+                      title={<span>{item.author_name}</span>}
                       description={<span>Heat: {item.heat}</span>}
                     />
                   </List.Item>
+                  </Link>
                 )}>
               </List>
             </Col>
@@ -164,17 +123,19 @@ class Home extends React.Component {
         console.log(res);
         // console.log(this);
         if (flag === 1) {
-
+          _this.setState({
+            authorsSortedByPaperCount: res.data.content,
+            loadingAuthorsByCount: false
+          });
         }
         else if (flag === 2) {
-
+          _this.setState({
+            authorsSortedByHeat: res.data.content,
+            loadingAuthorsByHeat: false
+          });
         }
       })
       .catch(err => console.log(err))
-  }
-
-  jumpToAuthorProfile(id) {
-
   }
 
   search(val) {
