@@ -1,34 +1,41 @@
 .search-result-container {
-    width: 100%;
-    height: 100%;
-    padding: 20px 50px;
+  width: 100%;
+  height: 100%;
+  padding: 20px 50px;
 }
 
 .search-result-container .search {
-    /* background-color: blueviolet; */
-    height: 200px;
-    margin: 10px 0 50px 0;
+  /* background-color: blueviolet; */
+  height: 200px;
+  margin: 10px 0 50px 0;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
 }
 
 .search-result-container .search .logo {
-    width: 10%;
-    font-size: 50px;
-    font-weight: bold;
+  width: 10%;
+  font-size: 50px;
+  font-weight: bold;
 }
 
 .search-result-container .search .search-bar {
-    width: 30%;
-    margin-left: 50px;
+  width: 30%;
+  margin-left: 50px;
 }
 
-.search-result-container .result {
-    /* background-color: rgba(255, 255, 255, 0.3); */
+.search-result-container .pagitation {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+}
+
+/* .search-result-container .result {
+    background-color: rgba(255, 255, 255, 0.3);
     margin: 10px 30px;
     padding-top: 10px;
 }
@@ -70,4 +77,4 @@
 .search-result-container .result .card .academic-info .item-detail {
     font-size: 18px;
     font-style: italic;
-}
+} */

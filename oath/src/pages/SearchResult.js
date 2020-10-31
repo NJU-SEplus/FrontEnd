@@ -1,128 +1,118 @@
-import React from 'react';
-import { Input } from 'antd';
-import { Skeleton, Card, Avatar, Spin } from 'antd';
-import { Link } from 'react-router-dom'
-import request from '../libs/utils/request'
+import React from "react";
+import qs from "qs";
+import { Input } from "antd";
+import { Card, Spin, Pagination } from "antd";
+import request from "../libs/utils/request";
 
-import './SearchResult.css';
+import AuthorList from "../libs/components/search/AuthorList";
 
-const { Meta } = Card;
+import "./SearchResult.css";
+
 const { Search } = Input;
 
 class SearchResult extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			authorList: [],
-			loading: true,  // this variable should be in props
-			searchName: this.props.location.search.split("=")[1]
-		}
+    const query = qs.parse(this.props.location.search.substring(1));
+    this.state = {
+      authorList: [],
+      loading: true, // this variable should be in props
+      searchName: query.name,
+      pageNum: query.pageNum,
+      pageSize: 10
+    };
 
-		this.getResult = this.getResult.bind(this);
-		this.changeVal = this.changeVal.bind(this);
-		this.generateResult = this.generateResult.bind(this);
-		this.search = this.search.bind(this);
+    this.getResult = this.getResult.bind(this);
+    this.changeVal = this.changeVal.bind(this);
+    this.search = this.search.bind(this);
+    this.onChange = this.onChange.bind(this);
 
-		this.getResult();
-	}
+    this.getResult();
+  }
 
-	// search value from routes
-	render() {
-		console.log("render");
-		const cardList = this.generateResult();
-		return (
-			<div className="search-result-container">
-				<div className="search">
-					<div className="logo">OATH</div>
-					<div className="search-bar">
-						<Search
-							value={this.state.searchName}
-							onChange={this.changeVal}
-							onSearch={this.search}>
-						</Search>
-					</div>
-				</div>
-				<Spin spinning={this.state.loading}>
-					<div className="result">
-						{cardList}
-					</div>
-				</Spin>
-			</div>
-		);
-	}
+  // search value from routes
+  render() {
+    return (
+      <div className="search-result-container">
+        <div className="search">
+          <div className="logo">OATH</div>
+          <div className="search-bar">
+            <Search
+              value={this.state.searchName}
+              onChange={this.changeVal}
+              onSearch={this.search}
+            ></Search>
+          </div>
+        </div>
+        <Spin spinning={this.state.loading}>
+          {/* <div className="result">{cardList}</div> */}
+          <AuthorList authorList={this.state.authorList} />
+        </Spin>
+		<div className="pagitation">
+		<Pagination
+          current={this.state.pageNum}
+          total={this.state.total}
+          pageSize={this.state.pageSize}
+		  onChange={this.onChange}
+		  showSizeChanger={false}
+        />
+		</div>
+      </div>
+    );
+  }
 
-	getResult() {
-		let _this = this;
+  getResult() {
+    let _this = this;
 
-		request('/search/name?name=' + this.state.searchName)
-			.then(res => {
-				console.log(res);
-				_this.setState({
-					authorList: res.data.content,
-					loading: false
-				})
-			})
-			.catch(err => {
-				console.log(err);
-			})
-	}
+    request(
+      `/search/name?name=${this.state.searchName}&pageNum=${this.state.pageNum}&pageSize=${this.state.pageSize}`
+    )
+      .then((res) => {
+        console.log("get ", res);
+        _this.setState({
+          ..._this.state,
+          authorList: res.data.content.list,
+          total: res.data.content.total,
+          loading: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-	generateResult() {
-		let cardList = this.state.authorList.map(curr => {
+  changeVal(e) {
+    this.setState({
+      ...this.state,
+      searchName: e.target.value,
+    });
+  }
 
-			return (
-				<Link to={{
-					pathname: '/authorprofile/' + curr.author_id,
-				}}
-					key={curr.author_id}>
-					<Card className="card" >
-						{/* <Skeleton loading={this.state.loading} avatar active> */}
-						<Meta
-							avatar={
-								<Avatar src={curr.author_avatar} size={100} />
-							}
-						// title={<div className="person-name">{this.state.basicInfo.name}</div>}
-						// description={<div className="person-aka">AKA: {aka}</div>}
-						/>
-						<div className="person-info">
-							<div className="person-info-name">{curr.author_name}</div>
-							{/* <div className="person-info-aka">AKA: {aka}</div> */}
-						</div>
-						<div className="academic-info">
-							<div className="academic-info-item">
-								<span className="item-title">Affiliation: </span>
-								<span className="item-detail">{curr.affiliation}</span>
-							</div>
-							<div className="academic-info-item">
-								<span className="item-title">Paper Count: </span>
-								<span className="item-detail">{curr.author_paperCount}</span>
-							</div>
-						</div>
-						{/* <div className="field-info">
-								{fields}
-							</div> */}
-						{/* </Skeleton> */}
-					</Card>
-				</Link>
-			)
-		});
-
-		return cardList;
-	}
-
-	changeVal(e) {
-		this.setState({
-			searchName: e.target.value
-		});
-	}
-
-	search(val) {
-		this.setState({
-			loading: true
-		});
-		this.getResult(val);
-	}
+  search() {
+    this.setState({
+      ...this.state,
+      pageNum: 1,
+      pageSize: 10,
+    });
+    this.props.history.push({
+      pathname: "/result",
+      search: `?name=${this.state.searchName}&pageNum=${this.state.pageNum}`,
+	});
+	this.getResult();
+  }
+  onChange(page) {
+    this.setState({
+      ...this.state,
+      loading: true,
+      pageNum: page,
+	});
+	this.props.history.push({
+		pathname: "/result",
+		search: `?name=${this.state.searchName}&pageNum=${this.state.pageNum}`,
+	  });
+    this.getResult();
+  }
 }
 
 export default SearchResult;
