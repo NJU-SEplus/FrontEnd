@@ -19,6 +19,13 @@ class PaperList extends React.Component {
           <List
             itemLayout="horizontal"
             dataSource={this.props.paperList}
+            className="content"
+            pagination={{
+              onChange: page => {
+                console.log(page);
+              },
+              pageSize: 5,
+            }}
             renderItem={(item) => (
               <List.Item>
                 <List.Item.Meta title={<span>· {item.title}</span>} />

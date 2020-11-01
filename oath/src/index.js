@@ -15,7 +15,7 @@ ReactDOM.render(
 (  <Router>
     <Route path="/" component={Home} exact/>
     <Route path="/authorprofile/:id" component={Author}/>
-    <Route path="/result" component={SearchResult}/>
+    <Route path="/result" component={SearchResult} />
   </Router>),
   document.getElementById('root')
 );

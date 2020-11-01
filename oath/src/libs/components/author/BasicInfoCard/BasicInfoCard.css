@@ -1,95 +1,78 @@
 .basic-info-card {
     width: 100%;
-    background-color: skyblue;
     height: 250px;
 }
 
 .basic-info-card .card {
     height: 100%;
+    width: 100%;
 }
 
-/* .basic-info-card .avatar {
-    width: 30%;
-    height: calc(var(width));
-    margin: 50px 0 30px 50px;
-    border-radius: calc(100% * 0.5);
-    border: 2px solid #000000;
-    display: inline-block;
-    vertical-align: top;
+.card-content {
+    display: flex;
+    flex-direction: row;
+    padding: 0 1%;
 }
 
-.basic-info-card .person-info {
-    display: inline-block;
-    margin: 50px 10px 0 30px;
+.basic-info-words{
+    flex: 1;
 }
 
-.basic-info-card .person-info .info-item {
-    display: block;
+.person-info-detail{
+    padding-left: 4%;
 }
 
-.basic-info-card .person-info .info-item:first-child {
-    font-size: 25px;
-    font-weight: bold;
-    margin-bottom: 10px;
-} */
-
-.basic-info-card .card .person-info-name {
+.person-info-name {
     font-size: 40px;
     font-weight: bold;
-    /* border: 2px #000 solid; */
     line-height: 1.2;
-    margin: 10px 0 4px 10px;
 }
-
-.basic-info-card .card .person-info-aka {
+.person-info-aka{
+    padding-top: 3%;
+    padding-left: 2%;
     font-size: 15px;
-    /* line-height: normal; */
     line-height: 1.2;
-    margin: 0px 10px;
     color: gray;
 }
 
-.basic-info-card .card .academic-info {
-    margin: 3px 0 4px 126px;
+.academic-info{
+    padding-top: 3%;
+    padding-left: 2%;
 }
 
-.basic-info-card .card .academic-info .academic-info-item {
-    margin-bottom: 8px;
-}
+.academic-info .academic-info-item {
+    padding-bottom: 3%;
 
-.basic-info-card .card .academic-info .academic-info-item > * {
+}
+.academic-info .academic-info-item > * {
     font-size: 15px;
-    /* font-weight: bold; */
     font-style: italic;
 }
 
 .academic-info .academic-info-item .item-explain {
     font-size: 13px;
     padding-left: 2px;
-    /* font-weight: bold; */
 }
 
-.affiliation-card {
-    padding: 10px 0;
+.affiliation-info {
+    padding-left: 3%;
+    padding-top: 2%;
 }
 
 
-.affiliation-card .title {
+.affiliation-info .title {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 5px;
+    padding-bottom: 1%;
     /* text-align: center; */
 }
 
-.affiliation-card .current .current-title,  .affiliation-card .history .history-title{
+.affiliation-info .current .title,.affiliation-info .history .title{
+    padding-bottom: 1%;
     font-size: 18px;
     font-weight: bold;
 }
 
-.affiliation-card .current .current-item, .affiliation-card .history .history-item {
+.affiliation-info .current .current-item, .affiliation-card .history .history-item {
     font-size: 15px;
-}
-
-.affiliation-card .history  > * {
-    margin-right: 5px;
 }
