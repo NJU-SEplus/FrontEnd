@@ -26,6 +26,7 @@ class Author extends React.Component {
         topicList: [],
       },
       paperList: [],
+      interestList:[]
     };
   }
 
@@ -38,7 +39,7 @@ class Author extends React.Component {
 
   async loadBasic() {
     const res = await request("/author/basicinfo?id=" + this.state.id);
-    const { affiliation, ...rest } = res.data.content;
+    const { affiliation, ...rest } = res.data?.content ;
     this.setState({
       ...this.state,
       basicInfo: {
@@ -73,6 +74,10 @@ class Author extends React.Component {
   async loadInterests(){
     const res = await request("/author/showResearchDirection?id=" + this.state.id);
     console.log("interest", res);
+    this.setState({
+      ...this.state,
+      interestList: res.data.content
+    })
   }
 
   async loadPapers() {
@@ -108,7 +113,7 @@ class Author extends React.Component {
         </Row>
         <Row gutter={16}>
           <Col span={24} >
-            <InterestLine />
+            <InterestLine interestList={this.state.interestList}/>
           </Col>
 
         </Row>
