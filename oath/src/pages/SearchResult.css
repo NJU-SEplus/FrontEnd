@@ -6,7 +6,7 @@
 
 .search-result-container .search {
   /* background-color: blueviolet; */
-  height: 200px;
+  height: 100px;
   margin: 10px 0 50px 0;
 
   display: flex;
@@ -25,6 +25,11 @@
 .search-result-container .search .search-bar {
   width: 30%;
   margin-left: 50px;
+}
+
+.author-list{
+    min-height: 50vh;
+    text-align: center;
 }
 
 .search-result-container .pagitation {

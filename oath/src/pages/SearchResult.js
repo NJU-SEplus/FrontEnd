@@ -20,7 +20,7 @@ class SearchResult extends React.Component {
       loading: true, // this variable should be in props
       searchName: query.name,
       pageNum: query.pageNum,
-      pageSize: 10
+      pageSize: 10,
     };
 
     this.getResult = this.getResult.bind(this);
@@ -45,37 +45,46 @@ class SearchResult extends React.Component {
             ></Search>
           </div>
         </div>
-        <Spin spinning={this.state.loading}>
-          {/* <div className="result">{cardList}</div> */}
-          <AuthorList authorList={this.state.authorList} />
-        </Spin>
-		<div className="pagitation">
-		<Pagination
-          current={this.state.pageNum}
-          total={this.state.total}
-          pageSize={this.state.pageSize}
-		  onChange={this.onChange}
-		  showSizeChanger={false}
-        />
-		</div>
+        <div className="author-list">
+          <Spin spinning={this.state.loading} size="large">
+            {/* <div className="result">{cardList}</div> */}
+            {this.state.authorList.length === 0 ? (
+              !this.state.loading && <div>no result!</div>
+            ) : (
+              <AuthorList authorList={this.state.authorList} />
+            )}
+          </Spin>
+        </div>
+
+        <div className="pagitation">
+          <Pagination
+            current={this.state.pageNum}
+            total={this.state.total}
+            pageSize={this.state.pageSize}
+            onChange={this.onChange}
+            showSizeChanger={false}
+          />
+        </div>
       </div>
     );
   }
 
   getResult() {
     let _this = this;
-
+    const name = this.state.searchName;
     request(
       `/search/name?name=${this.state.searchName}&pageNum=${this.state.pageNum}&pageSize=${this.state.pageSize}`
     )
       .then((res) => {
-        console.log("get ", res);
-        _this.setState({
-          ..._this.state,
-          authorList: res.data.content.list,
-          total: res.data.content.total,
-          loading: false,
-        });
+        console.log("get ", this.props.location, name);
+        if (name === qs.parse(this.props.location.search.substring(1)).name) {
+          _this.setState({
+            ..._this.state,
+            authorList: res.data.content.list,
+            total: res.data.content.total,
+            loading: false,
+          });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -92,25 +101,26 @@ class SearchResult extends React.Component {
   search() {
     this.setState({
       ...this.state,
+      loading: true,
       pageNum: 1,
       pageSize: 10,
     });
     this.props.history.push({
       pathname: "/result",
       search: `?name=${this.state.searchName}&pageNum=${this.state.pageNum}`,
-	});
-	this.getResult();
+    });
+    this.getResult();
   }
   onChange(page) {
     this.setState({
       ...this.state,
       loading: true,
       pageNum: page,
-	});
-	this.props.history.push({
-		pathname: "/result",
-		search: `?name=${this.state.searchName}&pageNum=${this.state.pageNum}`,
-	  });
+    });
+    this.props.history.push({
+      pathname: "/result",
+      search: `?name=${this.state.searchName}&pageNum=${this.state.pageNum}`,
+    });
     this.getResult();
   }
 }
