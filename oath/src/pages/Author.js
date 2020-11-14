@@ -104,10 +104,10 @@ class Author extends React.Component {
             />
           </Col>
           <Col span={8}>
-            {/* <TopicCard
-              topicList={this.state.topic.topicList}
-              loading={this.state.topic.loading}
-            /> */}
+            <TopicCard
+              // topicList={this.state.topic.topicList}
+              // loading={this.state.topic.loading}
+            />
           </Col>
         </Row>
         <Row gutter={16}>
