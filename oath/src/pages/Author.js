@@ -73,6 +73,7 @@ class Author extends React.Component {
 
   async loadInterests(){
     const res = await request("/author/showResearchDirection?id=" + this.state.id);
+    console.log(res);
     this.setState({
       ...this.state,
       interestList: res.data.content
