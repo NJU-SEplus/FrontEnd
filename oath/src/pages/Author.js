@@ -30,12 +30,12 @@ class Author extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   this.loadBasic();
-  //   this.loadTopics();
-  //   this.loadPapers();
-  //   this.loadInterests();
-  // }
+  componentDidMount() {
+    this.loadBasic();
+    this.loadTopics();
+    this.loadPapers();
+    this.loadInterests();
+  }
 
   async loadBasic() {
     const res = await request("/author/basicinfo?id=" + this.state.id);
@@ -106,8 +106,8 @@ class Author extends React.Component {
           </Col>
           <Col span={8}>
             <TopicCard
-              // topicList={this.state.topic.topicList}
-              // loading={this.state.topic.loading}
+              topicList={this.state.topic.topicList}
+              loading={this.state.topic.loading}
             />
           </Col>
         </Row>
