@@ -8,6 +8,8 @@ import BasicInfoCard from "../libs/components/author/BasicInfoCard/BasicInfoCard
 import TopicCard from "../libs/components/author/TopicCard/TopicCard";
 import PaperList from "../libs/components/author/PaperList/PaperList";
 import InterestLine from "../libs/components/author/InterestsLine/InterestsLine"
+import RelationNode from "../libs/components/author/RelationNode/RelationNode"
+
 
 class Author extends React.Component {
   constructor(props) {
@@ -26,7 +28,12 @@ class Author extends React.Component {
         topicList: [],
       },
       paperList: [],
-      interestList:[]
+      interestList:[],
+      relation: [],
+      center: {
+        id: props.match.params.id,
+        name: "defalut",
+      }
     };
   }
 
@@ -35,6 +42,7 @@ class Author extends React.Component {
     this.loadTopics();
     this.loadPapers();
     this.loadInterests();
+    this.loadRelation();
   }
 
   async loadBasic() {
@@ -51,6 +59,10 @@ class Author extends React.Component {
         history: affiliation.slice(1) || [],
         loading: false,
       },
+      center: {
+        name: rest.author_name,
+        id: this.state.id
+      }
     });
   }
 
@@ -76,6 +88,15 @@ class Author extends React.Component {
     this.setState({
       ...this.state,
       interestList: res.data.content
+    })
+  }
+
+  async loadRelation(){
+    const res =await  request(`/author/relation?id=${this.state.id}`);
+    console.log("relation", res.data)
+    this.setState({
+      ...this.state,
+      relation: res.data.content,
     })
   }
 
@@ -117,6 +138,11 @@ class Author extends React.Component {
 
         </Row>
 
+        <Row gutter={16}>
+          <Col span={12}>
+            <RelationNode center={this.state.center} relations={this.state.relation}/>
+          </Col>
+        </Row>
         <Row gutter={16} >
           <Col span={24}>
             <PaperList paperList={this.state.paperList} />
