@@ -30,12 +30,12 @@ class Author extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.loadBasic();
-    this.loadTopics();
-    this.loadPapers();
-    this.loadInterests();
-  }
+  // componentDidMount() {
+  //   this.loadBasic();
+  //   this.loadTopics();
+  //   this.loadPapers();
+  //   this.loadInterests();
+  // }
 
   async loadBasic() {
     const res = await request("/author/basicinfo?id=" + this.state.id);

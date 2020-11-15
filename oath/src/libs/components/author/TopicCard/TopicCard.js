@@ -2,9 +2,8 @@ import React from "react";
 // import { WordCloud } from "@ant-design/charts";
 import ReactEchartsCore from "echarts-for-react/lib/core";
 import echarts from "echarts/lib/echarts";
-import "echarts/lib/chart/line";
+import 'echarts-wordcloud';
 
- 
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/tooltip';
 
@@ -18,100 +17,107 @@ class TopicCard extends React.Component {
     super(props);
   }
 
-  getOption = () => {
+  getOption = (data) => {
     return {
-      title: {
-        text: '堆叠区域图'
-      },
-      tooltip : {
-        trigger: 'axis'
-      },
-      // legend: {
-      //   data:['邮件营销','联盟广告','视频广告']
-      // },
-      // toolbox: {
-      //   feature: {
-      //     saveAsImage: {}
-      //   }
-      // },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis : [
-        {
-          type : 'category',
-          boundaryGap : false,
-          data : ['周一','周二','周三','周四','周五','周六','周日']
-        }
-      ],
-      yAxis : [
-        {
-          type : 'value'
-        }
-      ],
-      series : [
-        {
-          name:'邮件营销',
-          type:'line',
-          stack: '总量',
-          areaStyle: {normal: {}},
-          data:[120, 132, 101, 134, 90, 230, 210]
+      tooltip: {},
+      series: [{
+        type: 'wordCloud',
+        gridSize: 20,
+        sizeRange: [12, 50],
+        rotationRange: [0, 0],
+        shape: 'circle',
+        textStyle: {
+          normal: {
+            color: function () {
+              return 'rgb(' + [
+                Math.round(Math.random() * 160),
+                Math.round(Math.random() * 160),
+                Math.round(Math.random() * 160)
+              ].join(',') + ')';
+            }
+          },
+          emphasis: {
+            shadowBlur: 10,
+            shadowColor: '#333'
+          }
         },
-        {
-          name:'联盟广告',
-          type:'line',
-          stack: '总量',
-          areaStyle: {normal: {}},
-          data:[220, 182, 191, 234, 290, 330, 310]
-        },
-        {
-          name:'视频广告',
-          type:'line',
-          stack: '总量',
-          areaStyle: {normal: {}},
-          data:[150, 232, 201, 154, 190, 330, 410]
-        }
-      ]
+        data: [{
+          name: 'Sam S Club',
+          value: 10000
+        }, {
+          name: 'Macys',
+          value: 6181
+        }, {
+          name: 'Amy Schumer',
+          value: 4386
+        }, {
+          name: 'Jurassic World',
+          value: 4055
+        }, {
+          name: 'Charter Communications',
+          value: 2467
+        }, {
+          name: 'Chick Fil A',
+          value: 2244
+        }, {
+          name: 'Planet Fitness',
+          value: 1898
+        }, {
+          name: 'Pitch Perfect',
+          value: 1484
+        }, {
+          name: 'Express',
+          value: 1112
+        }, {
+          name: 'Home',
+          value: 965
+        }, {
+          name: 'Johnny Depp',
+          value: 847
+        }, {
+          name: 'Lena Dunham',
+          value: 582
+        }, {
+          name: 'Lewis Hamilton',
+          value: 555
+        }, {
+          name: 'KXAN',
+          value: 550
+        }, {
+          name: 'Mary Ellen Mark',
+          value: 462
+        }, {
+          name: 'Farrah Abraham',
+          value: 366
+        }, {
+          name: 'Rita Ora',
+          value: 360
+        }, {
+          name: 'Serena Williams',
+          value: 282
+        }, {
+          name: 'NCAA baseball tournament',
+          value: 273
+        }, {
+          name: 'Point Break',
+          value: 265
+        }]
+      }]
     };
   }
-  
+
   render() {
     const data = this.props.topicList;
 
-    const config = {
-      // data,
-      color: "#6262ff",
-      autoFit: false,
-      // width: 400,
-      // height: 230,
-      data: this.props.topicList,
-      loading: this.props.loading,
-      wordField: "name",
-      weightField: "value",
-      wordStyle: {
-        fontFamily: "Verdana",
-        fontSize: [24, 80],
-      },
-      padding: [10, 20],
-    };
-
-
-
     return (
       <div className="topic-card">
-        {/* <WordCloud {...config} autoFit={false}/> */}
         <ReactEchartsCore
           echarts={echarts}
-          option={this.getOption()}
-          notMerge={true}
+          option={this.getOption(this.props)}
+          style={this.props.style || { height: '100%', width: '100%' }}
           lazyUpdate={true}
-          // theme={"theme_name"}
-          // onChartReady={this.onChartReadyCallback}
-          // onEvents={EventsDict}
-          // opts={}
+          notMerge={true}
+          // onEvents={this.props.onEvents}
         />
       </div>
     );
