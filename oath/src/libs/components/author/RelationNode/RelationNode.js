@@ -166,32 +166,50 @@ class RelationNode extends React.Component {
 
   getNodes = (center, authorList) => {
     const onePos = authorList.findIndex((v) => v.colla_times === 1);
-    console.log(onePos);
-    const nodeList = authorList.map((node, i) => {
-      const n = {
-        name: node.colla_name,
-        value: node.colla_times,
-        id: node.colla_id,
-        label: {
-          show: false,
-        },
-        // symbolSize:Math.ceil(Math.log(node.colla_times+2))*10,
-        symbolSize: (node.colla_times + 2) * 3,
-        category: i < onePos / 2 ? 1 : node.colla_times === 1 ? 0 : 2,
-      };
-      return n;
+    // console.log(onePos);
+
+    const repeatList = [];
+
+    const nodeList = [];
+
+    authorList.forEach((node, i) => {
+      if (authorList.findIndex((v) => v.colla_id === node.colla_id) !== i) {
+        // console.log(authorList.findIndex(v => v.id === node.colla_id), i)
+        repeatList.push({
+          ...node,
+          origin: authorList.findIndex((v) => v.colla_id === node.colla_id),
+          cur: i,
+        });
+      } else {
+        const n = {
+          name: node.colla_name,
+          value: node.colla_times,
+          id: node.colla_id,
+          label: {
+            show: false,
+          },
+          // symbolSize:Math.ceil(Math.log(node.colla_times+2))*10,
+          symbolSize: (node.colla_times + 2) * 3,
+          category: i < onePos / 2 ? 1 : node.colla_times === 1 ? 0 : 2,
+        };
+        // return n;
+        nodeList.push(n)
+      }
     });
 
     nodeList.push({
       id: center.id,
       name: center.name,
-      itemStyle:{
-          color: 'red'
+      itemStyle: {
+        color: "red",
       },
-    //   value: 100,
+      //   value: 100,
       symbolSize: Math.ceil(Math.log(100 + 2)) * 10,
       categories: 3,
     });
+    console.log("nodes", nodeList);
+
+    console.log("repeat", repeatList);
 
     return nodeList;
   };
@@ -206,6 +224,7 @@ class RelationNode extends React.Component {
       //   edgeList.push(e);
       return e;
     });
+    console.log("edges", edgeList);
     return edgeList;
   };
 
@@ -285,7 +304,6 @@ class RelationNode extends React.Component {
         },
       ],
     };
-
     return settings;
   };
 
