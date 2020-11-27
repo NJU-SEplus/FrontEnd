@@ -166,15 +166,11 @@ class RelationNode extends React.Component {
 
   getNodes = (center, authorList) => {
     const onePos = authorList.findIndex((v) => v.colla_times === 1);
-    // console.log(onePos);
-
     const repeatList = [];
-
     const nodeList = [];
 
     authorList.forEach((node, i) => {
       if (authorList.findIndex((v) => v.colla_id === node.colla_id) !== i) {
-        // console.log(authorList.findIndex(v => v.id === node.colla_id), i)
         repeatList.push({
           ...node,
           origin: authorList.findIndex((v) => v.colla_id === node.colla_id),
@@ -207,9 +203,8 @@ class RelationNode extends React.Component {
       symbolSize: Math.ceil(Math.log(100 + 2)) * 10,
       categories: 3,
     });
-    console.log("nodes", nodeList);
-
-    console.log("repeat", repeatList);
+    // console.log("nodes", nodeList);
+    // console.log("repeat", repeatList);
 
     return nodeList;
   };
@@ -221,10 +216,9 @@ class RelationNode extends React.Component {
         target: edge.colla_id,
         value: edge.colla_times + 2,
       };
-      //   edgeList.push(e);
       return e;
     });
-    console.log("edges", edgeList);
+    // console.log("edges", edgeList);
     return edgeList;
   };
 

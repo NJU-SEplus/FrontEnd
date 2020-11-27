@@ -93,7 +93,7 @@ class Author extends React.Component {
 
   async loadRelation(){
     const res =await  request(`/author/relation?id=${this.state.id}`);
-    console.log("relation", res.data)
+    // console.log("relation", res.data)
     this.setState({
       ...this.state,
       relation: res.data.content,
@@ -102,6 +102,7 @@ class Author extends React.Component {
 
   async loadPapers() {
     const res = await request("/author/papers?id=" + this.state.id);
+    console.log("papers", res.data.content)
     this.setState({
       ...this.state,
       paperList: res.data.content,

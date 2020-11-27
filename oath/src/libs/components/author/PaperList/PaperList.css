@@ -8,3 +8,15 @@
 /* .paper-list .content{
     height: 300px;
 } */
+
+.paper-list .title{
+    font-size: 15px;
+}
+
+.paper-list .description{
+    font-size: 15px;
+}
+
+.paper-list .cite>*{
+    margin-left: 10px;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import { List, Card } from "antd";
-import { FileTextOutlined } from "@ant-design/icons";
+import { FileTextOutlined, TrademarkCircleOutlined, ShareAltOutlined} from "@ant-design/icons";
 
 import "./PaperList.css";
 
@@ -21,15 +21,21 @@ class PaperList extends React.Component {
             dataSource={this.props.paperList}
             className="content"
             pagination={{
-              onChange: page => {
+              onChange: (page) => {
                 console.log(page);
               },
               pageSize: 5,
             }}
             renderItem={(item) => (
               <List.Item>
-                <List.Item.Meta title={<span>· {item.title}</span>} />
-                <div>Citiation: {item.citation}</div>
+                <List.Item.Meta
+                  title={<span className="title">{item.title}</span>}
+                  description={<span className="description">DOI: {item.paper_id}</span>}
+                />
+                <div className="cite">
+                  <span><TrademarkCircleOutlined /> References: xxx</span>
+                  <span><ShareAltOutlined /> Cited by: {item.citation}</span>
+                </div>
               </List.Item>
             )}
           />
