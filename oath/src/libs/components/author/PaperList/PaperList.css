@@ -1,10 +1,36 @@
-.paper-list .title{
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
+.paper-list .card .ant-card-body {
+  position: relative;
+}
+.paper-list .title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 /* .paper-list .content{
     height: 300px;
 } */
+
+.paper-list .title {
+  font-size: 15px;
+}
+
+.paper-list .description {
+  font-size: 15px;
+}
+
+.paper-list .cite {
+  /* margin-left: 10px; */
+  /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.paper-list .cite .ref {
+  color: #1890ff;
+  cursor: pointer;
+  /* font: bolder; */
+}
