@@ -1,7 +1,7 @@
 import React from "react";
 import qs from "qs";
 import { Input } from "antd";
-import { Card, Spin, Pagination } from "antd";
+import { Spin, Pagination } from "antd";
 import request from "../libs/utils/request";
 
 import AuthorList from "../libs/components/search/AuthorList";

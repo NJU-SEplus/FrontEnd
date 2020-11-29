@@ -1,8 +1,6 @@
 import axios from "axios";
 import qs from "qs";
 
-let env = process.env.NODE_ENV;
-
 const baseURL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000/"
