@@ -26,6 +26,8 @@ class Home extends React.Component {
     this.loadRanking();
   }
 
+  // TODO: 搜索keyword为空的判断
+
   render() {
     return (
       <div>
