@@ -1,16 +1,28 @@
 import React from "react";
 import { Form, Input, Button, Divider } from "antd";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import AuthorList from "../libs/components/search/AuthorList";
 
 import request from "../libs/utils/request";
-
 import "./ReviewerRec.css";
 
-
-const layout = {
-  labelCol: { span: 7 },
-  wrapperCol: { span: 12 },
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 4 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 20 },
+  },
 };
+const formItemLayoutWithOutLabel = {
+  wrapperCol: {
+    xs: { span: 24, offset: 0 },
+    sm: { span: 20, offset: 4 },
+  },
+};
+
 const tailLayout = {
   wrapperCol: { offset: 11, span: 16 },
 };
@@ -21,34 +33,34 @@ class ReviewerRec extends React.Component {
     this.state = {
       recommendList: [],
     };
-    this.onFinish = this.onFinish.bind(this)
+    this.onFinish = this.onFinish.bind(this);
   }
 
   formRef = React.createRef();
 
   async onFinish(values) {
     console.log("Success:", values);
-    const res = await request({
-      method: "post",
-      url: "/author/reviewerRecommended",
-      headers:{"content-type": "application/json"},
-      // headers: {
-      //   "Content-Type": "application/json",
-      // },
-      data: JSON.stringify({
-        authorName: values.authorName,
-        authorID: "",
-        documentName: values.documentName,
-        affiliationName: [values.documentName],
-        affiliationID: [""],
-        keyword: [values.keyword],
-        otherDocumentDOI: [""],
-      }),
-    });
-    console.log(res, this);
-    this.setState({
-      recommendList: res.data.content
-    })
+    // const res = await request({
+    //   method: "post",
+    //   url: "/author/reviewerRecommended",
+    //   headers:{"content-type": "application/json"},
+    //   // headers: {
+    //   //   "Content-Type": "application/json",
+    //   // },
+    //   data: JSON.stringify({
+    //     authorName: values.authorName,
+    //     authorID: "",
+    //     documentName: values.documentName,
+    //     affiliationName: [values.documentName],
+    //     affiliationID: [""],
+    //     keyword: [values.keyword],
+    //     otherDocumentDOI: [""],
+    //   }),
+    // });
+    // console.log(res, this);
+    // this.setState({
+    //   recommendList: res.data.content
+    // })
   }
 
   onFinishFailed = (errorInfo) => {
@@ -70,11 +82,13 @@ class ReviewerRec extends React.Component {
         <div className="form">
           <h2>Paper Details</h2>
           <Form
-            ref={this.formRef}
-            {...layout}
+            initialValues={{
+              affiliationName: [""],
+              remember: true,
+            }}
+            {...formItemLayout}
             name="basic"
             scrollToFirstError
-            initialValues={{ remember: true }}
             onFinish={this.onFinish}
             onFinishFailed={this.onFinishFailed}
           >
@@ -95,15 +109,70 @@ class ReviewerRec extends React.Component {
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              label="Affiation"
+            <Form.List
               name="affiliationName"
+              required
               rules={[
-                { required: true, message: "Please input your paper name" },
+                {
+                  validator: async (_, names) => {
+                    if (!names || names.length < 2) {
+                      return Promise.reject(new Error("At least 2 passengers"));
+                    }
+                  },
+                },
               ]}
             >
-              <Input />
-            </Form.Item>
+              {(fields, { add, remove }, { errors }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item
+                      label={index === 0 ? "Affiliations" : ""}
+                      {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                      key={field.key}
+                      required
+                    >
+                      <Form.Item
+                        {...field}
+                        validateTrigger={["onChange", "onBlur"]}
+                        rules={[
+                          {
+                            required: true,
+                            whitespace: true,
+                            message:
+                              "Please input affiliation's name or delete this field.",
+                          },
+                        ]}
+                        noStyle
+                      >
+                        <Input
+                          placeholder="affiliation name"
+                          style={{ width: "95%", marginRight:0 }}
+                        />
+                      </Form.Item>
+                      { (
+                        <MinusCircleOutlined
+                          className="dynamic-delete-button"
+                          onClick={() => {if (index !== 0) remove(field.name)}}
+                          disabled={index === 0}
+                          style={{width: "5%", textAlign: "right", marginLeft:0, marginRight:0}}
+                        />
+                      ) }
+                    </Form.Item>
+                  ))}
+                  <Form.Item {...formItemLayoutWithOutLabel}>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      icon={<PlusOutlined />}
+                      style={{ width: "100%" }}
+                    >
+                      Add affiliation
+                    </Button>
+                    <Form.ErrorList errors={errors} />
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
             <Form.Item
               label="Key Words"
               name="keyword"
