@@ -36,31 +36,26 @@ class ReviewerRec extends React.Component {
     this.onFinish = this.onFinish.bind(this);
   }
 
-  formRef = React.createRef();
-
   async onFinish(values) {
     console.log("Success:", values);
-    // const res = await request({
-    //   method: "post",
-    //   url: "/author/reviewerRecommended",
-    //   headers:{"content-type": "application/json"},
-    //   // headers: {
-    //   //   "Content-Type": "application/json",
-    //   // },
-    //   data: JSON.stringify({
-    //     authorName: values.authorName,
-    //     authorID: "",
-    //     documentName: values.documentName,
-    //     affiliationName: [values.documentName],
-    //     affiliationID: [""],
-    //     keyword: [values.keyword],
-    //     otherDocumentDOI: [""],
-    //   }),
-    // });
-    // console.log(res, this);
-    // this.setState({
-    //   recommendList: res.data.content
-    // })
+    const res = await request({
+      method: "post",
+      url: "/author/reviewerRecommended",
+      headers:{"content-type": "application/json"},
+      data: JSON.stringify({
+        authorName: values.authorName[0],
+        authorID: "",
+        documentName: values.documentName,
+        affiliationName: values.affiliationName,
+        affiliationID: [""],
+        keyword: values.keyword,
+        otherDocumentDOI: [""],
+      }),
+    });
+    console.log(res, this);
+    this.setState({
+      recommendList: res.data.content
+    })
   }
 
   onFinishFailed = (errorInfo) => {
@@ -84,6 +79,8 @@ class ReviewerRec extends React.Component {
           <Form
             initialValues={{
               affiliationName: [""],
+              keyword: [""],
+              authorName: [""],
               remember: true,
             }}
             {...formItemLayout}
@@ -93,14 +90,6 @@ class ReviewerRec extends React.Component {
             onFinishFailed={this.onFinishFailed}
           >
             <Form.Item
-              label="Author Name"
-              name="authorName"
-              rules={[{ required: true, message: "Please input your name" }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
               label="Paper Name"
               name="documentName"
               rules={[
@@ -109,6 +98,79 @@ class ReviewerRec extends React.Component {
             >
               <Input />
             </Form.Item>
+            <Form.List
+              name="authorName"
+              required
+              rules={[
+                {
+                  validator: async (_, names) => {
+                    if (!names || names.length < 2) {
+                      return Promise.reject(new Error("At least 2 passengers"));
+                    }
+                  },
+                },
+              ]}
+            >
+              {(fields, { add, remove }, { errors }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item
+                      label={index === 0 ? "Author Name" : ""}
+                      {...(index === 0
+                        ? formItemLayout
+                        : formItemLayoutWithOutLabel)}
+                      key={field.key}
+                      required
+                    >
+                      <Form.Item
+                        {...field}
+                        validateTrigger={["onChange", "onBlur"]}
+                        rules={[
+                          {
+                            required: true,
+                            whitespace: true,
+                            message:
+                              "Please input author's name or delete this field.",
+                          },
+                        ]}
+                        noStyle
+                      >
+                        <Input
+                          placeholder="author name"
+                          style={{ width: "95%", marginRight: 0 }}
+                        />
+                      </Form.Item>
+                      {
+                        <MinusCircleOutlined
+                          className="dynamic-delete-button"
+                          onClick={() => {
+                            if (index !== 0) remove(field.name);
+                          }}
+                          disabled={index === 0}
+                          style={{
+                            width: "5%",
+                            textAlign: "right",
+                            marginLeft: 0,
+                            marginRight: 0,
+                          }}
+                        />
+                      }
+                    </Form.Item>
+                  ))}
+                  <Form.Item {...formItemLayoutWithOutLabel}>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      icon={<PlusOutlined />}
+                      style={{ width: "100%" }}
+                    >
+                      Add author
+                    </Button>
+                    <Form.ErrorList errors={errors} />
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
             <Form.List
               name="affiliationName"
               required
@@ -127,7 +189,9 @@ class ReviewerRec extends React.Component {
                   {fields.map((field, index) => (
                     <Form.Item
                       label={index === 0 ? "Affiliations" : ""}
-                      {...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
+                      {...(index === 0
+                        ? formItemLayout
+                        : formItemLayoutWithOutLabel)}
                       key={field.key}
                       required
                     >
@@ -146,17 +210,24 @@ class ReviewerRec extends React.Component {
                       >
                         <Input
                           placeholder="affiliation name"
-                          style={{ width: "95%", marginRight:0 }}
+                          style={{ width: "95%", marginRight: 0 }}
                         />
                       </Form.Item>
-                      { (
+                      {
                         <MinusCircleOutlined
                           className="dynamic-delete-button"
-                          onClick={() => {if (index !== 0) remove(field.name)}}
+                          onClick={() => {
+                            if (index !== 0) remove(field.name);
+                          }}
                           disabled={index === 0}
-                          style={{width: "5%", textAlign: "right", marginLeft:0, marginRight:0}}
+                          style={{
+                            width: "5%",
+                            textAlign: "right",
+                            marginLeft: 0,
+                            marginRight: 0,
+                          }}
                         />
-                      ) }
+                      }
                     </Form.Item>
                   ))}
                   <Form.Item {...formItemLayoutWithOutLabel}>
@@ -173,16 +244,80 @@ class ReviewerRec extends React.Component {
                 </>
               )}
             </Form.List>
-            <Form.Item
-              label="Key Words"
+            <Form.List
               name="keyword"
+              label="aaaa"
+              required
               rules={[
-                { required: true, message: "Please input your username!" },
+                {
+                  validator: async (_, names) => {
+                    if (!names || names.length < 1) {
+                      return Promise.reject(new Error("At least 1 key word"));
+                    }
+                  },
+                },
               ]}
             >
-              <Input />
-            </Form.Item>
-
+              {(fields, { add, remove }, { errors }) => (
+                <>
+                  {fields.map((field, index) => (
+                    <Form.Item
+                      label={index === 0 ? "Key words" : ""}
+                      {...(index === 0
+                        ? formItemLayout
+                        : formItemLayoutWithOutLabel)}
+                      key={field.key}
+                      required
+                    >
+                      <Form.Item
+                        {...field}
+                        validateTrigger={["onChange", "onBlur"]}
+                        rules={[
+                          {
+                            required: true,
+                            whitespace: true,
+                            message:
+                              "Please input a key word or delete this field.",
+                          },
+                        ]}
+                        noStyle
+                      >
+                        <Input
+                          placeholder="key word"
+                          style={{ width: "95%", marginRight: 0 }}
+                        />
+                      </Form.Item>
+                      {
+                        <MinusCircleOutlined
+                          className="dynamic-delete-button"
+                          onClick={() => {
+                            if (index !== 0) remove(field.name);
+                          }}
+                          disabled={index === 0}
+                          style={{
+                            width: "5%",
+                            textAlign: "right",
+                            marginLeft: 0,
+                            marginRight: 0,
+                          }}
+                        />
+                      }
+                    </Form.Item>
+                  ))}
+                  <Form.Item {...formItemLayoutWithOutLabel}>
+                    <Button
+                      type="dashed"
+                      onClick={() => add()}
+                      icon={<PlusOutlined />}
+                      style={{ width: "100%" }}
+                    >
+                      Add key words
+                    </Button>
+                    <Form.ErrorList errors={errors} />
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit">
                 Submit
@@ -194,11 +329,6 @@ class ReviewerRec extends React.Component {
         <div className="recommend">
           <h2>Recommended reviewers</h2>
           <div className="recommend-list">
-            {/* <ul>
-              {this.state.recommendList.map((reviewer) => {
-                return <li>{reviewer.author_name}</li>;
-              })}
-            </ul> */}
             <AuthorList authorList={this.state.recommendList} />
           </div>
         </div>
