@@ -7,8 +7,9 @@ import request from "../libs/utils/request";
 import BasicInfoCard from "../libs/components/author/BasicInfoCard/BasicInfoCard";
 import TopicCard from "../libs/components/author/TopicCard/TopicCard";
 import PaperList from "../libs/components/author/PaperList/PaperList";
-import InterestLine from "../libs/components/author/InterestsLine/InterestsLine"
-import RelationNode from "../libs/components/author/RelationNode/RelationNode"
+import InterestLine from "../libs/components/author/InterestsLine/InterestsLine";
+import RelationNode from "../libs/components/author/RelationNode/RelationNode";
+import CollaboratorCard from "../libs/components/author/CollaboratorCard/CollaboratorCard";
 
 
 class Author extends React.Component {
@@ -33,7 +34,8 @@ class Author extends React.Component {
       center: {
         id: props.match.params.id,
         name: "defalut",
-      }
+      },
+      collaborators: []
     };
   }
 
@@ -43,6 +45,7 @@ class Author extends React.Component {
     this.loadPapers();
     this.loadInterests();
     this.loadRelation();
+    this.loadCollaboratorPrediction();
   }
 
   async loadBasic() {
@@ -109,6 +112,16 @@ class Author extends React.Component {
     });
   }
 
+  async loadCollaboratorPrediction() {
+    // const res = await request("/author/collaboratorPredict?id=" + this.state.id);
+    const res = await request("/author/collaboratorPredict?id=37275735100");
+    console.log("collaborators: ", res.data.content);
+    this.setState({
+      ...this.state,
+      collaborators: res.data.content,
+    });
+  }
+
   render() {
     return (
       <div className="Author">
@@ -142,6 +155,9 @@ class Author extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <RelationNode center={this.state.center} relations={this.state.relation}/>
+          </Col>
+          <Col span={12}>
+            <CollaboratorCard collaborators={this.state.collaborators}></CollaboratorCard>
           </Col>
         </Row>
         <Row gutter={16} >

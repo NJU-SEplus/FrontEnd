@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, List, Avatar, Row, Col } from 'antd';
+import { Input, List, Avatar, Row, Col, message } from 'antd';
 import { Link } from 'react-router-dom';
 import {
   EditOutlined,
@@ -9,6 +9,9 @@ import request from '../libs/utils/request';
 import './Home.css';
 
 const { Search } = Input;
+const warning = () => {
+  message.warning('Search content cannot be empty!');
+};
 
 class Home extends React.Component {
   constructor(props) {
@@ -145,8 +148,8 @@ class Home extends React.Component {
   }
 
   search(val) {
-    console.log(this.props)
-    this.props.history.push({ pathname: '/result', query: { author: val }, search: `?name=${val}&pageNum=1` })
+    if (val.length === 0) warning();
+    else this.props.history.push({ pathname: '/result', query: { author: val }, search: `?name=${val}&pageNum=1` })
   }
 }
 
