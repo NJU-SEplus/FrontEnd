@@ -1,9 +1,13 @@
-.interest-line .title{
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 25px;
+.interest-line .title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
 }
-.interest-list{
-    text-align: left;
+
+.ant-steps-item-title{
+    margin-left: 25px;
+}
+.interest-list {
+  text-align: left;
 }

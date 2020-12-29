@@ -37,7 +37,6 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/reviewer" style={{relative: "absolute", right:0}}><EditOutlined /></Link>
         <div className="container">
           <div className="overlay">
             <div className="o-content">
