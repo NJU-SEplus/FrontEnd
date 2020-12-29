@@ -126,8 +126,6 @@ class Home extends React.Component {
     const _this = this;
     request(url)
       .then(res => {
-        console.log(res);
-        // console.log(this);
         if (flag === 1) {
           _this.setState({
             authorsSortedByPaperCount: res.data.content,

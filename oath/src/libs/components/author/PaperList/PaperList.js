@@ -59,10 +59,8 @@ class PaperList extends React.Component {
             dataSource={this.props.paperList}
             className="content"
             pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
               pageSize: 5,
+              showSizeChanger:false
             }}
             renderItem={(item) => (
               <List.Item>

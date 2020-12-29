@@ -123,7 +123,6 @@ class Author extends React.Component {
   async loadCollaboratorPrediction() {
     // const res = await request("/author/collaboratorPredict?id=" + this.state.id);
     const res = await request("/author/collaboratorPredict?id=37275735100");
-    console.log("collaborators: ", res.data.content);
     this.setState({
       ...this.state,
       collaborators: res.data.content,

@@ -37,7 +37,6 @@ class ReviewerRec extends React.Component {
   }
 
   async onFinish(values) {
-    console.log("Success:", values);
     const res = await request({
       method: "post",
       url: "/author/reviewerRecommended",
@@ -52,14 +51,12 @@ class ReviewerRec extends React.Component {
         otherDocumentDOI: [""],
       }),
     });
-    console.log(res, this);
     this.setState({
       recommendList: res.data.content
     })
   }
 
   onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   render() {
