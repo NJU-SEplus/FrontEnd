@@ -7,10 +7,6 @@ import "./AuthorList.css";
 const { Meta } = Card;
 
 class AuthorList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let cardList = this.props.authorList.map((curr) => {
       return (

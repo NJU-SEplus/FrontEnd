@@ -1,9 +1,6 @@
 import React from 'react';
 import { Input, List, Avatar, Row, Col, message } from 'antd';
 import { Link } from 'react-router-dom';
-import {
-  EditOutlined,
-} from '@ant-design/icons';
 import request from '../libs/utils/request';
 
 import './Home.css';

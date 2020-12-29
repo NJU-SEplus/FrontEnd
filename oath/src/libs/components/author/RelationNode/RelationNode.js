@@ -100,7 +100,6 @@ class RelationNode extends React.Component {
           type: "graph",
           layout: "force",
           force: {
-            edgeLength: [100, 600],
             initLayout: "circular",
             repulsion: 50,
             edgeLength: [50, 150],
