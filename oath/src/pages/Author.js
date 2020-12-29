@@ -29,6 +29,7 @@ class Author extends React.Component {
       },
       paperList: [],
       interestList:[],
+      predictInterest:[],
       relation: [],
       center: {
         id: props.match.params.id,
@@ -42,6 +43,7 @@ class Author extends React.Component {
     this.loadTopics();
     this.loadPapers();
     this.loadInterests();
+    this.loadInterestPredict();
     this.loadRelation();
   }
 
@@ -90,10 +92,17 @@ class Author extends React.Component {
       interestList: res.data.content
     })
   }
+  async loadInterestPredict(){
+    const res = await request("/author/interestPredict?id=" + this.state.id);
+    this.setState({
+      ...this.state,
+      predictInterest: res.data.content
+    })
+
+  }
 
   async loadRelation(){
     const res =await  request(`/author/relation?id=${this.state.id}`);
-    // console.log("relation", res.data)
     this.setState({
       ...this.state,
       relation: res.data.content,
@@ -102,7 +111,6 @@ class Author extends React.Component {
 
   async loadPapers() {
     const res = await request("/author/papers?id=" + this.state.id);
-    console.log("papers", res.data.content)
     this.setState({
       ...this.state,
       paperList: res.data.content,
@@ -134,7 +142,7 @@ class Author extends React.Component {
         </Row>
         <Row gutter={16}>
           <Col span={24} >
-            <InterestLine interestList={this.state.interestList}/>
+            <InterestLine interestList={this.state.interestList} predict={this.state.predictInterest} />
           </Col>
 
         </Row>

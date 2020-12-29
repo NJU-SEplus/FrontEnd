@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "antd";
-import { FileTextOutlined } from "@ant-design/icons";
+import { DeploymentUnitOutlined } from "@ant-design/icons";
 
 import ReactEchartsCore from "echarts-for-react/lib/core";
 import echarts from "echarts/lib/echarts";
@@ -11,10 +11,6 @@ import "echarts/lib/component/tooltip";
 import "./RelationNode.css";
 
 class RelationNode extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   getNodes = (center, authorList) => {
     const onePos = authorList.findIndex((v) => v.colla_times === 1);
     const repeatList = [];
@@ -39,18 +35,18 @@ class RelationNode extends React.Component {
           category: i < onePos / 2 ? 1 : node.colla_times === 1 ? 0 : 2,
         };
         // return n;
-        nodeList.push(n)
+        nodeList.push(n);
       }
     });
 
     const size = nodeList[0]?.symbolSize || 0;
-    nodeList.push({
+    nodeList.unshift({
       id: center.id,
       name: center.name,
       itemStyle: {
         color: "red",
       },
-      symbolSize:size*1.1,
+      symbolSize: size * 1.1,
       categories: 3,
     });
 
@@ -89,21 +85,16 @@ class RelationNode extends React.Component {
         borderWidth: 1,
         extraCssText: "width:15em; white-space:pre-wrap",
         formatter(node) {
-          if (node.dataType == "node") {
+          if (node.dataType === "node" && node.data.categories !== 3) {
             return `<div style="border-bottom: 1px solid rgba(255,255,255,.3);f
-                  ont-size: 22px;padding-bottom: 7px;margin-bottom: 7px"
+                  ont-size: 15px;padding-bottom: 5px;margin-bottom: 5px"
                   >${node.data.name}</div><div
-                  class="tool-content" style="font-size: 18px; text-align:left;
+                  class="tool-content" style="font-size: 12px; text-align:left;
                   "><strong>Cooperation times: </strong>${node.data.value}</div>`;
           }
         },
       },
-      color: [
-        "#ffeb00",
-        "#3bff00",
-        "#3fd4ff",
-        "#38b6b6",
-      ],
+      color: ["#ffeb00", "#3bff00", "#3fd4ff", "#38b6b6"],
       series: [
         {
           type: "graph",
@@ -147,14 +138,17 @@ class RelationNode extends React.Component {
       <div className="relation-node">
         <Card>
           <div className="title">
-            <FileTextOutlined /> Cooperation Authors
+            <DeploymentUnitOutlined /> Cooperation Authors
           </div>
-          <ReactEchartsCore
-            echarts={echarts}
-            option={this.getOption()}
-            notMerge={true}
-            lazyUpdate={true}
-          />
+          <div className="content">
+            <ReactEchartsCore
+              echarts={echarts}
+              style={{height: '430px', width: '100%'}}
+              option={this.getOption()}
+              notMerge={true}
+              lazyUpdate={true}
+            />
+          </div>
         </Card>
       </div>
     );

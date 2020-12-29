@@ -1,6 +1,6 @@
 import React from "react";
-import { Steps, Card } from "antd";
-import { FileTextOutlined } from "@ant-design/icons";
+import { Steps, Card, Tooltip, Popover } from "antd";
+import { RadarChartOutlined } from "@ant-design/icons";
 
 import "./InterestsLine.css";
 
@@ -36,11 +36,28 @@ class InterestsLine extends React.Component {
   }
 
   render() {
+    const customDot = (dot, { status, index }) => {
+      return index === 10 ? (
+        <Popover
+          placement="topRight"
+          content={
+            <span>
+              The rank is calculated by <br />
+              the keyword frequency of protantial <br />
+              collaborators * the number of cooperation
+            </span>
+          }
+        >
+          {dot}
+        </Popover>
+      ) : (
+        dot
+      );
+    };
     const stepList = this.props.interestList.map((item) => {
       return (
         <Step
           title={item.year}
-          // status={item.direction.length === 0 ? "finish" : "process"}
           status="process"
           key={item.year}
           description={
@@ -54,36 +71,42 @@ class InterestsLine extends React.Component {
         />
       );
     });
-
+    const predictList = (
+      <Step
+        title={"2020"}
+        subTitle={"Prediction"}
+        status="finished"
+        key="2020"
+        description={
+          <ul className="interest-list">
+            {this.props.predict.map((i) => {
+              const interest = Object.keys(i)[0];
+              return (
+                <li key={interest}>
+                  <Tooltip title={i[interest]} placement="left">
+                    {interest}
+                  </Tooltip>
+                  ,
+                </li>
+              );
+            })}
+          </ul>
+        }
+      />
+    );
     return (
       <div className="interest-line">
         <Card>
           <div className="title">
-            <FileTextOutlined /> Interest Change
+            <RadarChartOutlined />
+            Interest Change
           </div>
-          <Steps progressDot>
-            {/* <Step
-              title="Finished"
-              status="finish"
-              description="You can hover on the dot."
-            />
-            <Step
-              title="In Progress"
-              status="process"
-              description="You can hover on the dot."
-            />
-            <Step
-              title="Waiting"
-              status="error"
-              description="You can hover on the dot."
-            />
-            <Step
-              title="Waiting"
-              status="wait"
-              description="You can hover on the dot."
-            /> */}
-            {stepList}
-          </Steps>
+          <div className="content">
+            <Steps progressDot={customDot} current={10}>
+              {stepList}
+              {predictList}
+            </Steps>
+          </div>
         </Card>
       </div>
     );
