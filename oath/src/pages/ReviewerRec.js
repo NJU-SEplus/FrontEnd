@@ -43,7 +43,7 @@ class ReviewerRec extends React.Component {
       url: "/author/reviewerRecommended",
       headers:{"content-type": "application/json"},
       data: JSON.stringify({
-        authorName: values.authorName[0],
+        authorName: values.authorName,
         authorID: "",
         documentName: values.documentName,
         affiliationName: values.affiliationName,
