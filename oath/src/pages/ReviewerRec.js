@@ -44,7 +44,7 @@ class ReviewerRec extends React.Component {
       headers:{"content-type": "application/json"},
       data: JSON.stringify({
         authorName: values.authorName,
-        authorID: "",
+        authorID: [""],
         documentName: values.documentName,
         affiliationName: values.affiliationName,
         affiliationID: [""],
