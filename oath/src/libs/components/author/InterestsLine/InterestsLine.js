@@ -95,10 +95,10 @@ class InterestsLine extends React.Component {
       />
     );
     return (
-      <div className="interest-line">
-        <Card>
+      <div >
+        <Card className="interest-line">
           <div className="title">
-            <RadarChartOutlined />
+            <RadarChartOutlined /> 
             Interest Change
           </div>
           <div className="content">
