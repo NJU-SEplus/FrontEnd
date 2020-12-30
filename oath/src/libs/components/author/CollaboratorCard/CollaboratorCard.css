@@ -3,8 +3,18 @@
   width: 100%;
   border: 1px solid #f0f0f0;
   background-color: #ffffff;
-  max-height: 392px;
+  height: 530px;
   overflow-y: scroll;
+}
+
+.collaborator-card::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.collaborator-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 10px;
 }
 
 .collaborator-card .title {
@@ -19,6 +29,7 @@
   padding-left: 18px;
   font-size: 12px;
 }
+
 
 .collaborator-card .panel .co-paper-title {
   padding-left: 25px;

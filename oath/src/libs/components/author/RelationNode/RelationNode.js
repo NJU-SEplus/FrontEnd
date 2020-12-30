@@ -100,7 +100,6 @@ class RelationNode extends React.Component {
           type: "graph",
           layout: "force",
           force: {
-            edgeLength: [100, 600],
             initLayout: "circular",
             repulsion: 50,
             edgeLength: [50, 150],
@@ -143,7 +142,7 @@ class RelationNode extends React.Component {
           <div className="content">
             <ReactEchartsCore
               echarts={echarts}
-              style={{height: '430px', width: '100%'}}
+              style={{height: '440px', width: '100%'}}
               option={this.getOption()}
               notMerge={true}
               lazyUpdate={true}

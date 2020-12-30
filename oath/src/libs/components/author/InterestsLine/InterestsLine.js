@@ -36,24 +36,6 @@ class InterestsLine extends React.Component {
   }
 
   render() {
-    const customDot = (dot, { status, index }) => {
-      return index === 10 ? (
-        <Popover
-          placement="topRight"
-          content={
-            <span>
-              The rank is calculated by <br />
-              the keyword frequency of protantial <br />
-              collaborators * the number of cooperation
-            </span>
-          }
-        >
-          {dot}
-        </Popover>
-      ) : (
-        dot
-      );
-    };
     const stepList = this.props.interestList.map((item) => {
       return (
         <Step
@@ -73,7 +55,20 @@ class InterestsLine extends React.Component {
     });
     const predictList = (
       <Step
-        title={"2020"}
+        title={
+          <Popover
+            placement="topRight"
+            content={
+              <span>
+                The rank is calculated by <br />
+                the keyword frequency of protantial <br />
+                collaborators * the number of cooperation
+              </span>
+            }
+          >
+            Future
+          </Popover>
+        }
         subTitle={"Prediction"}
         status="finished"
         key="2020"
@@ -95,14 +90,14 @@ class InterestsLine extends React.Component {
       />
     );
     return (
-      <div className="interest-line">
-        <Card>
+      <div>
+        <Card className="interest-line">
           <div className="title">
             <RadarChartOutlined />
             Interest Change
           </div>
           <div className="content">
-            <Steps progressDot={customDot} current={10}>
+            <Steps progressDot current={10}>
               {stepList}
               {predictList}
             </Steps>

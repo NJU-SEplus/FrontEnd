@@ -37,14 +37,13 @@ class ReviewerRec extends React.Component {
   }
 
   async onFinish(values) {
-    console.log("Success:", values);
     const res = await request({
       method: "post",
       url: "/author/reviewerRecommended",
       headers:{"content-type": "application/json"},
       data: JSON.stringify({
-        authorName: values.authorName[0],
-        authorID: "",
+        authorName: values.authorName,
+        authorID: [""],
         documentName: values.documentName,
         affiliationName: values.affiliationName,
         affiliationID: [""],
@@ -52,14 +51,12 @@ class ReviewerRec extends React.Component {
         otherDocumentDOI: [""],
       }),
     });
-    console.log(res, this);
     this.setState({
       recommendList: res.data.content
     })
   }
 
   onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   render() {
@@ -101,15 +98,6 @@ class ReviewerRec extends React.Component {
             <Form.List
               name="authorName"
               required
-              rules={[
-                {
-                  validator: async (_, names) => {
-                    if (!names || names.length < 2) {
-                      return Promise.reject(new Error("At least 2 passengers"));
-                    }
-                  },
-                },
-              ]}
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
@@ -174,15 +162,6 @@ class ReviewerRec extends React.Component {
             <Form.List
               name="affiliationName"
               required
-              rules={[
-                {
-                  validator: async (_, names) => {
-                    if (!names || names.length < 2) {
-                      return Promise.reject(new Error("At least 2 passengers"));
-                    }
-                  },
-                },
-              ]}
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
@@ -246,17 +225,7 @@ class ReviewerRec extends React.Component {
             </Form.List>
             <Form.List
               name="keyword"
-              label="aaaa"
               required
-              rules={[
-                {
-                  validator: async (_, names) => {
-                    if (!names || names.length < 1) {
-                      return Promise.reject(new Error("At least 1 key word"));
-                    }
-                  },
-                },
-              ]}
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
