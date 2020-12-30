@@ -1,0 +1,35 @@
+.collaborator-card {
+  padding: 24px;
+  width: 100%;
+  border: 1px solid #f0f0f0;
+  background-color: #ffffff;
+  height: 530px;
+  overflow-y: scroll;
+}
+
+.collaborator-card::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.collaborator-card::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 10px;
+}
+
+.collaborator-card .title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+
+
+.collaborator-card .panel .co-paper-title {
+  padding-left: 25px;
+}
+
+.ant-collapse-ghost>.ant-collapse-item>.ant-collapse-content>.ant-collapse-content-box {
+  padding-top: 0;
+}

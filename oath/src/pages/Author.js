@@ -7,8 +7,9 @@ import request from "../libs/utils/request";
 import BasicInfoCard from "../libs/components/author/BasicInfoCard/BasicInfoCard";
 import TopicCard from "../libs/components/author/TopicCard/TopicCard";
 import PaperList from "../libs/components/author/PaperList/PaperList";
-import InterestLine from "../libs/components/author/InterestsLine/InterestsLine"
-import RelationNode from "../libs/components/author/RelationNode/RelationNode"
+import InterestLine from "../libs/components/author/InterestsLine/InterestsLine";
+import RelationNode from "../libs/components/author/RelationNode/RelationNode";
+import CollaboratorCard from "../libs/components/author/CollaboratorCard/CollaboratorCard";
 
 
 class Author extends React.Component {
@@ -29,11 +30,13 @@ class Author extends React.Component {
       },
       paperList: [],
       interestList:[],
+      predictInterest:[],
       relation: [],
       center: {
         id: props.match.params.id,
         name: "defalut",
-      }
+      },
+      collaborators: []
     };
   }
 
@@ -42,7 +45,9 @@ class Author extends React.Component {
     this.loadTopics();
     this.loadPapers();
     this.loadInterests();
+    this.loadInterestPredict();
     this.loadRelation();
+    this.loadCollaboratorPrediction();
   }
 
   async loadBasic() {
@@ -90,10 +95,17 @@ class Author extends React.Component {
       interestList: res.data.content
     })
   }
+  async loadInterestPredict(){
+    const res = await request("/author/interestPredict?id=" + this.state.id);
+    this.setState({
+      ...this.state,
+      predictInterest: res.data.content
+    })
+
+  }
 
   async loadRelation(){
     const res =await  request(`/author/relation?id=${this.state.id}`);
-    // console.log("relation", res.data)
     this.setState({
       ...this.state,
       relation: res.data.content,
@@ -102,10 +114,18 @@ class Author extends React.Component {
 
   async loadPapers() {
     const res = await request("/author/papers?id=" + this.state.id);
-    console.log("papers", res.data.content)
     this.setState({
       ...this.state,
       paperList: res.data.content,
+    });
+  }
+
+  async loadCollaboratorPrediction() {
+    // const res = await request("/author/collaboratorPredict?id=" + this.state.id);
+    const res = await request("/author/collaboratorPredict?id=37275735100");
+    this.setState({
+      ...this.state,
+      collaborators: res.data.content,
     });
   }
 
@@ -134,7 +154,7 @@ class Author extends React.Component {
         </Row>
         <Row gutter={16}>
           <Col span={24} >
-            <InterestLine interestList={this.state.interestList}/>
+            <InterestLine interestList={this.state.interestList} predict={this.state.predictInterest} />
           </Col>
 
         </Row>
@@ -142,6 +162,9 @@ class Author extends React.Component {
         <Row gutter={16}>
           <Col span={12}>
             <RelationNode center={this.state.center} relations={this.state.relation}/>
+          </Col>
+          <Col span={12}>
+            <CollaboratorCard collaborators={this.state.collaborators}></CollaboratorCard>
           </Col>
         </Row>
         <Row gutter={16} >

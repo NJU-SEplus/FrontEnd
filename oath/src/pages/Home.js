@@ -1,14 +1,14 @@
 import React from 'react';
-import { Input, List, Avatar, Row, Col } from 'antd';
+import { Input, List, Avatar, Row, Col, message } from 'antd';
 import { Link } from 'react-router-dom';
-import {
-  EditOutlined,
-} from '@ant-design/icons';
 import request from '../libs/utils/request';
 
 import './Home.css';
 
 const { Search } = Input;
+const warning = () => {
+  message.warning('Search content cannot be empty!');
+};
 
 class Home extends React.Component {
   constructor(props) {
@@ -29,12 +29,9 @@ class Home extends React.Component {
     this.loadRanking();
   }
 
-  // TODO: 搜索keyword为空的判断
-
   render() {
     return (
       <div>
-        <Link to="/reviewer" style={{relative: "absolute", right:0}}><EditOutlined /></Link>
         <div className="container">
           <div className="overlay">
             <div className="o-content">
@@ -126,8 +123,6 @@ class Home extends React.Component {
     const _this = this;
     request(url)
       .then(res => {
-        console.log(res);
-        // console.log(this);
         if (flag === 1) {
           _this.setState({
             authorsSortedByPaperCount: res.data.content,
@@ -145,8 +140,8 @@ class Home extends React.Component {
   }
 
   search(val) {
-    console.log(this.props)
-    this.props.history.push({ pathname: '/result', query: { author: val }, search: `?name=${val}&pageNum=1` })
+    if (val.length === 0) warning();
+    else this.props.history.push({ pathname: '/result', query: { author: val }, search: `?name=${val}&pageNum=1` })
   }
 }
 
