@@ -98,15 +98,6 @@ class ReviewerRec extends React.Component {
             <Form.List
               name="authorName"
               required
-              rules={[
-                {
-                  validator: async (_, names) => {
-                    if (!names || names.length < 2) {
-                      return Promise.reject(new Error("At least 2 passengers"));
-                    }
-                  },
-                },
-              ]}
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
@@ -171,15 +162,6 @@ class ReviewerRec extends React.Component {
             <Form.List
               name="affiliationName"
               required
-              rules={[
-                {
-                  validator: async (_, names) => {
-                    if (!names || names.length < 2) {
-                      return Promise.reject(new Error("At least 2 passengers"));
-                    }
-                  },
-                },
-              ]}
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
@@ -243,17 +225,7 @@ class ReviewerRec extends React.Component {
             </Form.List>
             <Form.List
               name="keyword"
-              label="aaaa"
               required
-              rules={[
-                {
-                  validator: async (_, names) => {
-                    if (!names || names.length < 1) {
-                      return Promise.reject(new Error("At least 1 key word"));
-                    }
-                  },
-                },
-              ]}
             >
               {(fields, { add, remove }, { errors }) => (
                 <>
