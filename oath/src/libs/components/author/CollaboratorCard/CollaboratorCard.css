@@ -24,6 +24,11 @@
   margin-bottom: 10px;
 }
 
+.collaborator-card .tip {
+  color: gray;
+  padding-left: 18px;
+  font-size: 12px;
+}
 
 
 .collaborator-card .panel .co-paper-title {
