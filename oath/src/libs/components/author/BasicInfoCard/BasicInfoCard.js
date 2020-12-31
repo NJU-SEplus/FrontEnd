@@ -78,7 +78,7 @@ class BasicInfoCard extends React.Component {
                           :{" "}
                         </span>
                         <span className="item-detail">
-                          {this.props.citation}
+                          {this.props.heat}
                         </span>
                       </div>
                     </div>
