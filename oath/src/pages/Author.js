@@ -141,6 +141,7 @@ class Author extends React.Component {
               paperCount={this.state.basicInfo.author_paperCount}
               citation={this.state.basicInfo.citation}
               loading={this.state.basicInfo.loading}
+              heat={this.state.basicInfo.heat}
               current={this.state.affiliations.current}
               history={this.state.affiliations.history}
             />
